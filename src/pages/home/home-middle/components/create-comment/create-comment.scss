@@ -1,0 +1,62 @@
+.create-comment-container {
+  .create-comment {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border-radius: .5rem;
+    margin-top: .8rem;
+    .comment-icon {
+      background-color: #cfcece;
+      display: inline-block;
+      border-radius: 50%;
+      min-width: 30px;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+      align-self: flex-start;
+      position: relative;
+      .online {
+        position: absolute;
+        min-width: 11px;
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+        background-color: #31a24c;
+        right: -1px;
+        bottom: 0px;
+        border: 2px solid #fff;
+      }
+    }
+    .comment-create {
+      background-color: #e4e6eb;
+      padding: 1rem 1.5rem;
+      border-radius: 2rem;
+      width: 100%;
+      margin-left: .5rem;
+      cursor: pointer;
+      .comment-editable {
+        display: inline-block;
+        min-width: 79%;
+        max-width: 100%;
+        cursor: text;
+        word-break: break-word;
+        &[placeholder]:empty:before {
+          content: attr(placeholder);
+          color: #555; 
+        }
+        &:focus-visible {
+          border: unset;
+          outline: unset;
+          box-shadow: unset;
+        }
+      }
+    }
+    .comment-extension {
+      text-align: right;
+      float: right;
+      .comment-extension-item {
+        margin-left: .7rem;
+      }
+    }
+  }
+}

@@ -1,0 +1,112 @@
+.nav-bar-container {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: #fff;
+  .nav-bar {
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 0px -1px 0px 3px #ebebed;
+    position: relative;
+    padding: 0 1rem;
+    .nav-left {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      min-width: 320px;
+      position: relative;
+    }
+    .nav-middle {
+      .nav-landing {
+        display: flex;
+        list-style: none;
+        margin-bottom: unset;
+        height: 100%;
+        .landing-item {
+          display: flex;
+          .item-icon {
+            display: inline-block;
+            color: #000;
+            transition: background-color .2s ease-in-out;
+            border-bottom: 3px solid transparent;
+            display: flex;
+            align-items: center;
+            span {
+              display: inline-block;
+              padding: 1rem;
+              &:hover{
+                border-radius: .5rem;
+                background-color: #efeded;
+              }
+            }
+            &.active{
+              border-bottom-color: #1877f2;
+              color: #1877f2;
+              background-color: transparent;
+              span {
+                &:hover{
+                  border-radius: unset;
+                  background-color: unset;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .nav-right {
+      display: flex;
+      padding: .6rem .3rem;
+      .user {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .user-link {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: .5rem;
+          border-radius: 2rem;
+          color: #000;
+          .user-icon {
+            min-width: 30px;
+            width: 30px;
+            height: 30px;
+            background-color: #e4e6eb;
+            border-radius: 50%;
+          }
+          .user-text {
+            margin-left: .5rem;
+          }
+          &:hover{
+            background-color: #f0f0f0;
+          }
+        }
+      }
+      .extension {
+        display: flex;
+        align-items: center;
+        margin-left: 1rem;
+        .extension-item {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-width: 40px;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background-color: #e4e6eb;
+          cursor: pointer;
+          margin: 0 0.2rem;
+          transition: background-color .3s;
+          position: relative;
+          &:hover {
+            background-color:#d0d3d9;
+          }
+        }
+      }
+    }
+  }
+}

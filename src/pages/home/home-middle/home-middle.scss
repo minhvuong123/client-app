@@ -1,0 +1,11 @@
+.home-middle-container {
+  flex-basis: 774px;
+  padding: 1rem 8rem 0;
+  position: relative;
+  z-index: 1;
+
+  @media screen and (max-width: 882px) {
+    max-width: 600px;
+    padding: unset;
+  }
+}

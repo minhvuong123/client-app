@@ -1,0 +1,26 @@
+.create-post-container {
+  .create-post {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    padding: .8rem;
+    border-radius: .5rem;
+    .post-icon {
+      background-color: #cfcece;
+      display: inline-block;
+      border-radius: 50%;
+      min-width: 40px;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+    .post-create {
+      background-color: #e4e6eb;
+      padding: .6rem;
+      border-radius: 1rem;
+      width: 100%;
+      margin-left: .5rem;
+      cursor: pointer;
+    }
+  }
+}

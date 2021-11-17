@@ -1,0 +1,19 @@
+html, body {
+  height: calc(100vh - 53.4px);
+  background-color: #f0f2f5;
+  font-size: 10px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.app-container {
+  font-size: 1.5rem;
+  .app-home {
+    margin-top: 53.4px;
+    display: flex;
+    justify-content: space-between;
+    min-height: calc(100vh - 53.4px);
+    @media screen and (max-width: 882px) {
+      justify-content: center;
+    }
+  }
+}

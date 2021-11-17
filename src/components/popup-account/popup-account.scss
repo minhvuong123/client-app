@@ -1,0 +1,71 @@
+.account-popup {
+  padding: 0 1rem;
+  position: absolute;
+  right: 1.5rem;
+  top: 100%;
+  background-color: #fff;
+  border-radius: 0.5rem;
+  box-shadow: #3c40434d 0px 1px 2px 0px, #3c404326 0px 2px 6px 2px;
+  .account-block {
+    display: flex;
+    align-items: center;
+    padding: 1rem ;
+    margin: 1rem 0;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s ease-in-out;
+    cursor: pointer;
+    .block-icon {
+      min-width: 50px;
+      width: 50px;
+      height: 50px;
+      background-color: #e4e6eb;
+      border-radius: 50%;
+    }
+    .block-info {
+      display: flex;
+      flex-direction: column;
+      margin-left: 1rem;
+      .info-name {
+        font-size: 1.6rem;
+        font-weight: 500;
+        white-space: nowrap;
+      }
+      .info-text {
+        font-size: 1.4rem;
+        white-space: nowrap;
+      }
+    }
+    &:hover {
+      background-color: #efeded9c;
+    }
+  }
+  .block-line {
+    height: 1px;
+    background-color: #b8afaf;
+    margin: 0 1rem;
+  }
+  .nav-setting {
+    padding: 1rem 0;
+    cursor: pointer;
+    .setting-item {
+      display: flex;
+      align-items: center;
+      padding: 0.6rem 1rem;
+      border-radius: 0.5rem;
+      transition: background-color 0.2s ease-in-out;
+      .setting-item-icon {
+        width: 30px;
+        min-width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: #e4e6eb;
+      }
+      .setting-item-text {
+        margin-left: 1rem;
+      }
+      &:hover {
+        background-color: #efeded9c;
+      }
+    }
+  }
+}

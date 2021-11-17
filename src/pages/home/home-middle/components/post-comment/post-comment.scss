@@ -1,0 +1,63 @@
+.comment-container {
+  margin-top: 1rem;
+  .comment {
+    .comment-block {
+      display: flex;
+      .comment-user {
+        min-width: 30px;
+        width: 30px;
+        height: 30px;
+        background-color: #b4afaf;
+        border-radius: 50%;
+      }
+      .comment-content {
+        .comment-text {
+          background-color: #f0f2f5;
+          padding: .6rem;
+          border-radius: 1.2rem;
+          margin-left: .5rem;
+          display: flex;
+          flex-direction: column;
+          position: relative;
+          .comment-name {
+            font-weight: 600;
+          }
+          .comment-message {
+            
+          }
+          .comment-emotion {
+            position: absolute;
+            bottom: -10px;
+            right: 0;
+            background-color: #fff;
+            border-radius: 1.4rem;
+            font-size: 1.4rem;
+            cursor: pointer;
+          }
+        }
+        .comment-extension {
+          margin-left: .5rem;
+          margin-top: .5rem;
+          font-size: 1.2rem;
+          font-weight: 600;
+          .extension {
+            margin-left: 1rem;
+            cursor: pointer;
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+          .like {
+            margin-left: 0;
+          }
+          .response {
+            
+          }
+          .hours {
+            color: #65676b;
+          }
+        }
+      }
+    }
+  }
+}
