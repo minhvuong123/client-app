@@ -5,6 +5,7 @@ import Messengers from 'pages/messengers/messengers';
 import Friends from 'pages/friends/friends';
 import Watch from 'pages/watch/watch';
 import Groups from 'pages/groups/groups';
+import Profile from 'pages/profile/profile';
 
 export const RenderRoutes = ({ routes }: any) => {
   return (
@@ -39,6 +40,10 @@ const RoutesPath = [
   { 
     path: '/groups',
     element: <Groups />
+  },
+  { 
+    path: '/profile',
+    element: <Profile />
   }
 ]
 

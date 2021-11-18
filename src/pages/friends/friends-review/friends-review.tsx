@@ -1,11 +1,12 @@
 
-import FriendsList from './friends-list/friends-list';
-import './friends.scss';
+
+
+import './friends-review.scss';
 
 function Friends() {
   return (
     <div className="app-friends">
-       <FriendsList />
+      
     </div>
   );
 }

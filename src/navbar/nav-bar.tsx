@@ -89,10 +89,10 @@ function NavBar() {
         </div>
         <div className="nav-right">
           <div className="user">
-            <a href="/" className="user-link">
+            <NavLink to="/profile" className="user-link">
               <span className="user-icon"> </span>
               <span className="user-text">Nguyễn</span>
-            </a>
+            </NavLink>
           </div>
           <div className="extension">
             <div onClick={() => changePopupName('message')} className="extension-messenger extension-item">Mes</div>
