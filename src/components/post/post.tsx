@@ -1,6 +1,6 @@
 
+import PostComment from 'components/post-comment/post-comment';
 import banXe from 'images/ban_xe.jpg';
-import PostComment from '../post-comments/post-comments';
 import './post.scss';
 
 function Post() {

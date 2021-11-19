@@ -1,14 +1,15 @@
 
 
 
+import Profile from 'pages/profile/profile';
 import './friends-review.scss';
 
-function Friends() {
+function FriendsReview() {
   return (
-    <div className="app-friends">
-      
+    <div className="app-friends-review">
+      <Profile />
     </div>
   );
 }
 
-export default Friends;
+export default FriendsReview;

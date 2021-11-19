@@ -1,6 +1,6 @@
 
-import CreateComment from '../create-comment/create-comment';
-import PostComment from '../post-comment/post-comment';
+import CreateComment from 'components/create-comment/create-comment';
+import PostComment from 'components/post-comment/post-comment';
 import './post-comments.scss';
 
 function PostComments() {

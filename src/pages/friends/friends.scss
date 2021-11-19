@@ -1,5 +1,20 @@
 .app-friends {
   display: flex;
-  margin-top: 53.4px;
   height: calc(100vh - 53.4px);
+  margin-top: 53.4px;
+  .app-friends-list {
+    width: 360px;
+    .app-friends-list-container {
+      position: fixed;
+      top: 53.4px;
+      border-right: 1px solid #b0b0b0;
+      width: 360px;
+    }
+  }
+  .app-friends-review {
+    flex-grow: 1;
+    .app-profile-container {
+      margin-top: unset;
+    }
+  }
 }
