@@ -6,6 +6,7 @@ import Friends from 'pages/friends/friends';
 import Watch from 'pages/watch/watch';
 import Groups from 'pages/groups/groups';
 import Profile from 'pages/profile/profile';
+import SignIn from 'pages/signin/signin';
 
 export const RenderRoutes = ({ routes }: any) => {
   return (
@@ -23,7 +24,7 @@ export const RenderRoutes = ({ routes }: any) => {
 const RoutesPath = [
   { 
     path: '/',
-    element: <Home />
+    element: Boolean(localStorage.getItem('access_token')) ? <Home /> : <SignIn />
   },
   { 
     path: '/messengers',
