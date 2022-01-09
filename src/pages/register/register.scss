@@ -32,6 +32,17 @@
         margin-bottom: 1.5rem;
         display: flex;
         justify-content: space-between;
+        flex-wrap: wrap;
+        .form-input {
+          padding: 1rem;
+          font-size: 1.5rem;
+          border-radius: 0.5rem;
+          border: 1px solid #d3d0d0;
+          margin-bottom: 0.5rem;
+          &:focus-visible {
+            outline: unset;
+          }
+        }
       }
       .register-button {
         width: 100%;

@@ -1,8 +1,7 @@
 
-
-import FormInput from 'components/formInput/form-input';
 import { useHookForm } from 'hook/useForm';
 import { RegisterModel } from 'model';
+import { Input } from 'antd';
 import './register.scss';
 
 
@@ -20,47 +19,40 @@ function Register({ onCloseRegister }: RegisterModel) {
           </div>
           <div className="register-line mt-25 mb-25"></div>
           <div className="form-group">
-            <FormInput
+            <Input placeholder="Basic usage" />
+            <input
               type="text"
               name="firstName"
-              classWrap="w-48"
               placeholder="Họ"
+              className="form-input w-48"
               value={state.firstName}
-              validate={[
-                { min: 5 }, 
-                { max: 100 }, 
-                { required: true}
-              ]}
               onChange={handleChange}
             />
-            <FormInput
+            <input
               type="text"
               name="lastName"
-              classWrap="w-48"
               placeholder="Tên"
-              errorMessage="Last name is required !"
+              className="form-input w-48"
               value={state.lastName}
               onChange={handleChange}
             />
           </div>
           <div className="form-group">
-            <FormInput
+            <input
               type="text"
               name="emailPhone"
-              classWrap="w-100"
+              className="form-input w-100"
               placeholder="Số di động hoặc email"
-              errorMessage="Last name is required !"
               value={state.emailPhone}
               onChange={handleChange}
             />
           </div>
           <div className="form-group">
-            <FormInput
+            <input
               type="password"
               name="password"
-              classWrap="w-100"
+              className="form-input w-100"
               placeholder="Mật khẩu mới"
-              errorMessage="Last name is required !"
               value={state.password}
               onChange={handleChange}
             />
