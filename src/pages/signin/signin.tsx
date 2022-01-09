@@ -1,21 +1,27 @@
-import { useDispatch, useSelector } from 'react-redux';
+import Register from 'pages/register/register';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import './signin.scss';
 
 function SignIn() {
-  const selectorAuth = useSelector((state: any) => state.authentication);
   const dispatch = useDispatch();
-  console.log('selector:', selectorAuth);
+  const [isRegister, setRegister] = useState(false);
 
-  function login(event: any) {
+  function login(event: any): void {
     event.preventDefault();
     dispatch({ type: 'LOGIN' })
-
-    // eslint-disable-next-line no-self-assign
-    window.location.href = window.location.href; // reload page
   }
 
-  function logout() {
+  function logout(): void {
     dispatch({ type: 'LOGOUT' })
+  }
+
+  function register(): void {
+    setRegister(true)
+  }
+
+  function closeRegister(): void {
+    setRegister(false)
   }
 
   return (
@@ -31,9 +37,10 @@ function SignIn() {
           <a href="/" className="signin-button" onClick={login}>Đăng nhập</a>
           <a href="/" className="signin-forget">Quên mật khẩu?</a>
           <div className="signin-line"></div>
-          <div className="signin-button-create" onClick={logout}>Tạo tài khoản mới</div>
+          <div className="signin-button-create" onClick={register}>Tạo tài khoản mới</div>
         </div>
       </div>
+      { isRegister && <Register onCloseRegister={closeRegister} />}
     </div>
   );
 }

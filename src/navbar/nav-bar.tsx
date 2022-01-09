@@ -55,7 +55,7 @@ function NavBar() {
     }
   }
 
-  function changePopupName(name: string) {
+  function changePopupName(name: string): void {
     setFocus(true);
 
     if(name === popupName) {
@@ -64,6 +64,8 @@ function NavBar() {
       setPopupName(name);
     }
   }
+  
+
   return (
     <div className="nav-bar-container">
       <div className="nav-bar">
@@ -103,7 +105,7 @@ function NavBar() {
         { focus && popupRender(popupName) }
       </div>
     </div>
-  );
+  )
 }
 
 export default NavBar;

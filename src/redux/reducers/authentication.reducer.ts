@@ -6,8 +6,10 @@ const authentication = {
 }
 
 // selector
-export const SelectorIsLogin = (state: any) => state.isLogin; 
+export const SelectorIsLogin = (state: any) => state.authentication.isLogin; 
+export const SelectorAccessToken = (state: any) => state.authentication.access_token; 
 
+// reducers
 export default function authenticationReducer(state = authentication, action: any) {
   switch(action.type) {
     case LOGIN.LOGIN: 
