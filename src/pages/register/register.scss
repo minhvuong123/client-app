@@ -28,19 +28,82 @@
           cursor: pointer;
         }
       }
-      .form-group {
-        margin-bottom: 1.5rem;
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        .form-input {
-          padding: 1rem;
-          font-size: 1.5rem;
-          border-radius: 0.5rem;
-          border: 1px solid #d3d0d0;
-          margin-bottom: 0.5rem;
-          &:focus-visible {
-            outline: unset;
+      .form-container {
+        .form-group-inline {
+          margin-bottom: 1.5rem;
+          display: flex;
+          justify-content: space-between;
+          flex-wrap: wrap;
+          .ant-form-item {
+            width: 48%;
+            margin-bottom: unset;
+          }
+          .form-input {
+            padding: 1rem;
+            font-size: 1.5rem;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            &:focus-visible {
+              outline: unset;
+            }
+          }
+          .form-input-control {
+            .ant-form-item-control {
+              .ant-form-item-explain {
+                display: none;
+              }
+            }
+          }
+        }
+        .form-group {
+          margin-bottom: 1.5rem;
+          display: flex;
+          justify-content: space-between;
+          flex-wrap: wrap;
+          .ant-form-item {
+            width: 100%;
+            margin-bottom: unset;
+          }
+          .form-input {
+            padding: 1rem;
+            font-size: 1.5rem;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            &:focus-visible {
+              outline: unset;
+            }
+          }
+          .form-select-control {
+            width: 30%;
+            .form-select {
+              font-size: 1.5rem;
+              margin-bottom: 0.5rem;
+              .ant-select-selector {
+                height: 45px;
+                border-radius: 0.5rem;
+                .ant-select-selection-placeholder {
+                  line-height: 44px;
+                }
+                .ant-select-selection-item {
+                  line-height: 44px;
+                }
+              }
+              &:focus-visible {
+                outline: unset;
+              }
+            }
+            .ant-form-item-control {
+              .ant-form-item-explain {
+                display: none;
+              }
+            }
+          }
+          .form-input-control {
+            .ant-form-item-control {
+              .ant-form-item-explain {
+                display: none;
+              }
+            }
           }
         }
       }
@@ -55,6 +118,7 @@
         cursor: pointer;
         transition: background-color .1s ease-in-out;
         margin-bottom: 1.5rem;
+        height: unset;
         &:hover {
           background-color: #1867ce;
         }

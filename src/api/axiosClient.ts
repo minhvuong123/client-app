@@ -10,7 +10,7 @@ export const axiosClient = axios.create({
 
 axiosClient.interceptors.request.use(
 	function (config: AxiosRequestConfig | any) {
-		if(config) {
+		if (config) {
 			config.headers['authorization'] = localStorage.getItem('access_token');
 		}
 		return config;
@@ -22,10 +22,10 @@ axiosClient.interceptors.request.use(
 axiosClient.interceptors.response.use(
 	function (response: AxiosResponse): ResponseApiModel {
 
-		return { 
-      status: response.status, 
-      data: response.data 
-    };
+		return {
+			status: response.status,
+			data: response.data
+		};
 	}, function (error) {
 		return Promise.reject(error)
 	}

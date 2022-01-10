@@ -1,13 +1,38 @@
 
-import { useHookForm } from 'hook/useForm';
-import { RegisterModel } from 'model';
-import { Input } from 'antd';
+
+import { RegisterModel, RegisterUserRequest } from 'model';
+import { Form, Input, Select, Button } from 'antd';
 import './register.scss';
+import { registerApi, reisterUrl } from 'api';
+import { dayOptions, monthOptions, yearOptions } from 'const';
+import { useEffect } from 'react';
+
+const { Option } = Select;
 
 
 function Register({ onCloseRegister }: RegisterModel) {
-  const [state, handleChange] = useHookForm();
-  console.log(state);
+  const [form] = Form.useForm();
+
+  useEffect(() => {}, [])
+
+  const onFinish = async (values: any) => {
+    const originRegisterData = mapRegisterData(values);
+    const {status, data} = await registerApi.register(reisterUrl, originRegisterData);
+    console.log('Received values of form: ', status, data);
+  };
+
+  function mapRegisterData(originData: RegisterUserRequest): RegisterUserRequest {
+    const { first_name, last_name, email_phone, password, day_birth, month_birth, year_birth } = originData;
+
+    return {
+      first_name,
+      last_name,
+      email_phone,
+      password,
+      birthday: `${day_birth}/${month_birth}/${year_birth}`
+    }
+  }
+
 
   return (
     <div className="register-container">
@@ -18,69 +43,53 @@ function Register({ onCloseRegister }: RegisterModel) {
             <span className="header-close" onClick={onCloseRegister}>X</span>
           </div>
           <div className="register-line mt-25 mb-25"></div>
-          <div className="form-group">
-            <Input placeholder="Basic usage" />
-            <input
-              type="text"
-              name="firstName"
-              placeholder="Họ"
-              className="form-input w-48"
-              value={state.firstName}
-              onChange={handleChange}
-            />
-            <input
-              type="text"
-              name="lastName"
-              placeholder="Tên"
-              className="form-input w-48"
-              value={state.lastName}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              type="text"
-              name="emailPhone"
-              className="form-input w-100"
-              placeholder="Số di động hoặc email"
-              value={state.emailPhone}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              type="password"
-              name="password"
-              className="form-input w-100"
-              placeholder="Mật khẩu mới"
-              value={state.password}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="form-group">
-            <h5 className="form-label w-100">Sinh nhật</h5>
-            <select defaultValue={state.dayBirth} name="dayBirth" onChange={(event) => handleChange(event)} className="form-input w-30">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-            </select>
-            <select defaultValue={state.monthBirth} name="monthBirth" onChange={(event) => handleChange(event)} className="form-input w-30">
-              <option value="1">Tháng 1</option>
-              <option value="2">Tháng 2</option>
-              <option value="3">Tháng 3</option>
-              <option value="4">Tháng 4</option>
-              <option value="5">Tháng 5</option>
-            </select>
-            <select defaultValue={state.yearBirth} name="yearBirth" onChange={(event) => handleChange(event)} className="form-input w-30">
-              <option>2021</option>
-              <option>2020</option>
-              <option>2019</option>
-              <option>2018</option>
-            </select>
-          </div>
-          <div className="register-button">Đăng ký</div>
+          <Form form={form} className="form-container"  onFinish={onFinish}
+          >
+            <div className="form-group-inline">
+              <Form.Item name="first_name" className="form-input-control" rules={[{ required: true, message: '' }]}>
+                <Input className="form-input" placeholder="Họ" />
+              </Form.Item>
+              <Form.Item name="last_name" className="form-input-control" rules={[{ required: true, message: '' }]}>
+                <Input className="form-input" placeholder="Tên" />
+              </Form.Item>
+            </div>
+            <div className="form-group">
+              <Form.Item name="email_phone" className="form-input-control" rules={[{ required: true, message: '' }]}>
+                <Input className="form-input" placeholder="Số di động hoặc email" />
+              </Form.Item>
+            </div>
+            <div className="form-group">
+              <Form.Item name="password" className="form-input-control" rules={[{ required: true, message: '' }]}>
+                <Input className="form-input" placeholder="Mật khẩu mới" />
+              </Form.Item>
+            </div>
+
+            <div className="form-group">
+              <Form.Item  name="day_birth" className="form-select-control" rules={[{ required: true, message: '' }]}>
+                <Select className="form-select" placeholder="Day" >
+                  { dayOptions.map(day => <Option key={day.value} value={day.value}>{day.label}</Option>) }
+                </Select>
+              </Form.Item>
+              <Form.Item name="month_birth" className="form-select-control" rules={[{ required: true, message: '' }]}>
+                <Select className="form-select" placeholder="Month" >
+                  { monthOptions.map(month => <Option key={month.value} value={month.value}>{month.label}</Option>) }
+                </Select>
+              </Form.Item>
+              <Form.Item name="year_birth" className="form-select-control" rules={[{ required: true, message: '' }]}>
+                <Select className="form-select" placeholder="Year" >
+                  { yearOptions().map(year => <Option key={year.value} value={year.value}>{year.label}</Option>) }
+                </Select>
+              </Form.Item>
+            </div>
+
+            <div className="form-group">
+              <Form.Item>
+                <Button type="primary" htmlType="submit" className="register-button">
+                  Register
+                </Button>
+              </Form.Item>
+            </div>
+          </Form>  
         </div>
       </div>
     </div>

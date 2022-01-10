@@ -3,7 +3,7 @@
 import NavBar from 'navbar/nav-bar';
 import './app.scss';
 import RoutesPath, { RenderRoutes } from "routes/routes";
-import { axiosClient } from 'api/axiosClient';
+import { axiosClient } from 'api';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import Register from 'pages/register/register';
