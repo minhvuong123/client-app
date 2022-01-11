@@ -1,13 +1,17 @@
 
 
 
+import NavBar from 'navbar/nav-bar';
 import './watch.scss';
 
 function Watch() {
   return (
-    <div className="app-watch">
-      Watch
-    </div>
+    <>
+      <NavBar />
+      <div className="app-watch">
+        Watch
+      </div>
+    </>
   );
 }
 

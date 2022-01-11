@@ -20,7 +20,7 @@ axiosClient.interceptors.request.use(
 )
 
 axiosClient.interceptors.response.use(
-	function (response: AxiosResponse): ResponseApiModel {
+	function (response: AxiosResponse): ResponseApiModel<any> {
 
 		return {
 			status: response.status,

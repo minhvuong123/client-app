@@ -38,6 +38,7 @@
         cursor: pointer;
         transition: background-color .1s ease-in-out;
         margin-bottom: 1.5rem;
+        height: unset;
         &:hover {
           background-color: #1867ce;
         }

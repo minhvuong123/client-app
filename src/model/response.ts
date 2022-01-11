@@ -1,4 +1,4 @@
-export interface ResponseApiModel {
-    status: Number;
-    data: any
+export interface ResponseApiModel<T> {
+    status: number;
+    data: T
 }

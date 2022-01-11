@@ -43,8 +43,7 @@ function Register({ onCloseRegister }: RegisterModel) {
             <span className="header-close" onClick={onCloseRegister}>X</span>
           </div>
           <div className="register-line mt-25 mb-25"></div>
-          <Form form={form} className="form-container"  onFinish={onFinish}
-          >
+          <Form form={form} className="form-container"  onFinish={onFinish}>
             <div className="form-group-inline">
               <Form.Item name="first_name" className="form-input-control" rules={[{ required: true, message: '' }]}>
                 <Input className="form-input" placeholder="Họ" />
@@ -60,7 +59,7 @@ function Register({ onCloseRegister }: RegisterModel) {
             </div>
             <div className="form-group">
               <Form.Item name="password" className="form-input-control" rules={[{ required: true, message: '' }]}>
-                <Input className="form-input" placeholder="Mật khẩu mới" />
+                <Input type="password" className="form-input" placeholder="Mật khẩu mới" />
               </Form.Item>
             </div>
 

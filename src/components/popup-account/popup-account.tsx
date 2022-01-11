@@ -1,6 +1,13 @@
+import { useDispatch } from 'react-redux';
 import './popup-account.scss';
 
 function PopupAccount() {
+  const dispatch = useDispatch();
+  
+  function logout(): void {
+    dispatch({ type: 'LOGOUT' })
+  }
+
   return (
     <div className="account-popup">
       <div className="account-block">
@@ -18,7 +25,7 @@ function PopupAccount() {
         </div>
         <div className="setting-item">
           <span className="setting-item-icon"></span>
-          <span className="setting-item-text">Đăng xuất</span>
+          <span className="setting-item-text" onClick={logout}>Đăng xuất</span>
         </div>
       </div>
     </div>

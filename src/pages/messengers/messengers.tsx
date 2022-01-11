@@ -1,13 +1,17 @@
 
 
 
+import NavBar from 'navbar/nav-bar';
 import './messengers.scss';
 
 function Messengers() {
   return (
-    <div className="app-messengers">
-      Messengers
-    </div>
+    <>
+      <NavBar />
+      <div className="app-messengers">
+        Messengers
+      </div>
+    </>
   );
 }
 

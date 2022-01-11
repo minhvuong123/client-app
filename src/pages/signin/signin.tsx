@@ -1,46 +1,52 @@
 import Register from 'pages/register/register';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { Form, Input, Button } from 'antd';
 import './signin.scss';
 
 function SignIn() {
   const dispatch = useDispatch();
   const [isRegister, setRegister] = useState(false);
+  const [form] = Form.useForm();
 
-  function login(event: any): void {
-    event.preventDefault();
-    dispatch({ type: 'LOGIN' })
-  }
+  const onFinish = async (values: any) => {
+    const originLoginData = values;
+    dispatch({ type: 'LOGIN', payload: originLoginData })
+  };
 
-  function logout(): void {
-    dispatch({ type: 'LOGOUT' })
-  }
-
-  function register(): void {
-    setRegister(true)
-  }
-
-  function closeRegister(): void {
-    setRegister(false)
+  function registerDialog(): void {
+    setRegister(!isRegister)
   }
 
   return (
     <div className="signin-container">
       <div className="signin">
         <div className="signin-form">
-          <div className="form-group">
-            <input type="text" className="form-input" placeholder="Email hoặc số điện thoại" />
-          </div>
-          <div className="form-group">
-            <input type="text" className="form-input" placeholder="Mật khẩu" />
-          </div>
-          <a href="/" className="signin-button" onClick={login}>Đăng nhập</a>
+          <Form form={form} className="form-container" onFinish={onFinish}>
+            <div className="form-group">
+              <Form.Item name="email_phone" className="form-input-control" rules={[{ required: true, message: '' }]}>
+                <Input className="form-input" placeholder="Email hoặc số điện thoại" />
+              </Form.Item>
+            </div>
+            <div className="form-group">
+              <Form.Item name="password" className="form-input-control" rules={[{ required: true, message: '' }]}>
+                <Input type="password" className="form-input" placeholder="Mật khẩu" />
+              </Form.Item>
+            </div>
+            <div className="form-group">
+              <Form.Item>
+                <Button type="primary" htmlType="submit" className="signin-button">
+                  Đăng nhập
+                </Button>
+              </Form.Item>
+            </div>
+          </Form>  
           <a href="/" className="signin-forget">Quên mật khẩu?</a>
           <div className="signin-line"></div>
-          <div className="signin-button-create" onClick={register}>Tạo tài khoản mới</div>
+          <div className="signin-button-create" onClick={registerDialog}>Tạo tài khoản mới</div>
         </div>
       </div>
-      { isRegister && <Register onCloseRegister={closeRegister} />}
+      { isRegister && <Register onCloseRegister={registerDialog} />}
     </div>
   );
 }

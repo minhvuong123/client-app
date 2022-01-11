@@ -1,13 +1,17 @@
 
 
 
+import NavBar from 'navbar/nav-bar';
 import './groups.scss';
 
 function Groups() {
   return (
-    <div className="app-groups">
-      Groups
-    </div>
+    <>
+      <NavBar />
+      <div className="app-groups">
+        Groups
+      </div>
+    </>
   );
 }
 
