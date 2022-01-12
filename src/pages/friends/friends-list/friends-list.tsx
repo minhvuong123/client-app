@@ -1,9 +1,22 @@
 
 
 
+import { suggestFriendsUrl, userApi } from 'api';
+import { useEffect } from 'react';
 import './friends-list.scss';
 
 function FriendsList() {
+
+  useEffect(() => { 
+    async function getSuggestFriends (){
+      // const suggestFriends = await userApi.suggestFriends(`${suggestFriendsUrl}/0/20`);
+      // console.log("suggestFriends: ", suggestFriends);
+    }
+
+    getSuggestFriends();
+  }, [])
+
+
   return (
     <div className="friends-list-container">
       <h3 className="friends-header">Bạn bè</h3>

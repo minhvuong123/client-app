@@ -1,3 +1,4 @@
+import { UserResponse } from "model";
 
 export const LOGIN = {
   LOGIN: 'LOGIN',
@@ -5,10 +6,11 @@ export const LOGIN = {
   FAULT: 'LOGIN_FAULT',
 };
 
-export function loginSuccess(token: string) {
+export function loginSuccess(token: string, user: UserResponse) {
   return {
     type: LOGIN.SUCCESS,
-    token
+    token,
+    user
   }
 } 
 

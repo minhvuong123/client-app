@@ -2,10 +2,10 @@
 
 import { RegisterModel, RegisterUserRequest } from 'model';
 import { Form, Input, Select, Button } from 'antd';
-import './register.scss';
-import { registerApi, reisterUrl } from 'api';
+import { userApi, reisterUrl } from 'api';
 import { dayOptions, monthOptions, yearOptions } from 'const';
-import { useEffect } from 'react';
+
+import './register.scss';
 
 const { Option } = Select;
 
@@ -13,12 +13,14 @@ const { Option } = Select;
 function Register({ onCloseRegister }: RegisterModel) {
   const [form] = Form.useForm();
 
-  useEffect(() => {}, [])
-
   const onFinish = async (values: any) => {
     const originRegisterData = mapRegisterData(values);
-    const {status, data} = await registerApi.register(reisterUrl, originRegisterData);
-    console.log('Received values of form: ', status, data);
+    const {status, data} = await userApi.register(reisterUrl, originRegisterData);
+
+    if(status === 200 && data.status === 'success') {
+      form.resetFields();
+    }
+    
   };
 
   function mapRegisterData(originData: RegisterUserRequest): RegisterUserRequest {

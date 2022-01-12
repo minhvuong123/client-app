@@ -6,10 +6,10 @@ import NavBar from 'navbar/nav-bar';
 import { NavLink } from 'react-router-dom';
 import './profile.scss';
 
-function Profile() {
+function Profile({ isShowNavBar }: any) {
   return (
     <>
-      <NavBar />
+      { isShowNavBar && <NavBar /> }
       <div className="app-profile-container">
         <div className="app-profile">
           <div className="profile-header">
@@ -75,6 +75,14 @@ function Profile() {
                   <div className="friends-item">
                     <span className="item-image"></span>
                     <span className="item-name">Name</span>
+                  </div>
+                  <div className="friends-item friends-item-fix">
+                  </div>
+                  <div className="friends-item friends-item-fix">
+                  </div>
+                  <div className="friends-item friends-item-fix">
+                  </div>
+                  <div className="friends-item friends-item-fix">
                   </div>
                 </div>
               </div>

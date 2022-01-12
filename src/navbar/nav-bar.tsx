@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-
-import './nav-bar.scss';
 import PopupNotify from 'components/popup-notify/popup-notify';
 import PopupMessage from 'components/popup-message/popup-message';
 import PopupAccount from 'components/popup-account/popup-account';
 import Search from 'components/search/search';
 import { navBarBlursAccount, navBarBlursMessenger, navBarBlursNofitication } from 'const';
+
+import './nav-bar.scss';
 
 function NavBar() {
   const [popupName, setPopupName] = useState('');
@@ -42,7 +42,6 @@ function NavBar() {
     return false;
   }
 
-
   function popupRender(name: string) {
     switch (name) {
       case 'message': 
@@ -64,7 +63,6 @@ function NavBar() {
       setPopupName(name);
     }
   }
-  
 
   return (
     <div className="nav-bar-container">

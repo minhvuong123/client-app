@@ -2,7 +2,8 @@ import { LOGIN, LOGOUT } from "redux/actions/authentication.action";
 
 const authentication = {
   isLogin: false,
-  access_token: ''
+  access_token: '',
+  user: {},
 }
 
 // selector
@@ -17,6 +18,7 @@ export default function authenticationReducer(state = authentication, action: an
       return {...state}
     case LOGIN.SUCCESS: 
       state.access_token = action.token;
+      state.user = action.user;
       state.isLogin = true;
       return {...state}
     case LOGOUT: 

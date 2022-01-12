@@ -1,17 +1,27 @@
 import Register from 'pages/register/register';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { Form, Input, Button } from 'antd';
 import './signin.scss';
+import { SelectorIsLogin } from 'redux/reducers/authentication.reducer';
 
 function SignIn() {
   const dispatch = useDispatch();
   const [isRegister, setRegister] = useState(false);
   const [form] = Form.useForm();
+  const isLogin = useSelector(SelectorIsLogin);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if(isLogin) {
+      navigate('/')
+    }
+  }, [isLogin])
 
   const onFinish = async (values: any) => {
     const originLoginData = values;
-    dispatch({ type: 'LOGIN', payload: originLoginData })
+    dispatch({ type: 'LOGIN', payload: originLoginData });
   };
 
   function registerDialog(): void {

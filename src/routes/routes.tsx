@@ -24,7 +24,11 @@ export const RenderRoutes = ({ routes }: any) => {
 const RoutesPath = [
   { 
     path: '/',
-    element: Boolean(localStorage.getItem('access_token')) ? <Home /> : <SignIn />
+    element: <Home />
+  },
+  { 
+    path: '/sign-in',
+    element: <SignIn />
   },
   { 
     path: '/messengers',
