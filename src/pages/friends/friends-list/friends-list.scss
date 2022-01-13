@@ -78,6 +78,9 @@
                   &:hover {
                     background-color: #166ad8;
                   }
+                  &.friend-added {
+                    display: none;
+                  }
                 }
                 &.remove-friend {
                   background-color: #e4e6eb;

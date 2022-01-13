@@ -6,24 +6,26 @@ import { LOGIN, loginSuccess, LOGOUT } from 'redux/actions/authentication.action
 
 
 
-function* dispatchLoginSuccess(token: string, user: UserResponse) {
-  yield put(loginSuccess(token, user));
+function* dispatchLoginSuccess(token: string, refreshToken: string, user: UserResponse) {
+  yield put(loginSuccess(token, refreshToken, user));
 }
 
 function* handleLogin(payload: LoginRequest) {
   const { status, data }: ResponseApiModel<LoginResponse> = yield call(userApi.login, loginUrl, payload);
-  const { message, token, user } = data;
+  const { message, token, refreshToken, user } = data;
 
   if(status && message === 'success' && token) {
     localStorage.setItem("access_token", token);
-    localStorage.setItem("user", user);
-    yield call(dispatchLoginSuccess, token, user);
+    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("refreshToken", refreshToken);
+    yield call(dispatchLoginSuccess, token, refreshToken, user);
   }
 }
 
 function* handleLogout() {
   localStorage.removeItem("access_token");
   localStorage.removeItem("user");
+  localStorage.removeItem("refreshToken");
   yield 1;
 }
 

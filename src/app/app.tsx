@@ -2,14 +2,17 @@
 import { userApi, validateUrl } from "api";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from 'react-router-dom';
 import { LOGIN } from "redux/actions/authentication.action";
 import RoutesPath, { RenderRoutes } from "routes/routes";
 import './app.scss';
 
 function App() {
   const token = localStorage.getItem('access_token');
+  const refreshToken = localStorage.getItem('refreshToken');
   const user = localStorage.getItem('user');
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if(token && user) {
@@ -17,7 +20,9 @@ function App() {
         const { status, data } = result;
 
         if(status === 200 && data.status === 'success') {
-          dispatch({ type: LOGIN.SUCCESS, token: token, user: user });
+          dispatch({ type: LOGIN.SUCCESS, token, refreshToken, user: JSON.parse(user) });
+        } else {
+          navigate('/');
         }
       })
     }

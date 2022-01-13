@@ -1,8 +1,20 @@
-import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
+import { SelectorIsLogin } from 'redux/reducers/authentication.reducer';
 import './popup-account.scss';
 
 function PopupAccount() {
   const dispatch = useDispatch();
+  const isLogin = useSelector(SelectorIsLogin);
+  const navigate = useNavigate();
+
+
+  useEffect(() => {
+    if(!isLogin) {
+      navigate('/')
+    }
+  }, [isLogin])
   
   function logout(): void {
     dispatch({ type: 'LOGOUT' })
