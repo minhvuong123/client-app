@@ -6,6 +6,7 @@ export const loginUrl = '/users/sign-in';
 export const suggestFriendsUrl = '/users/suggest';
 export const validateUrl = '/validate';
 export const addFriendUrl = '/users/addFriend';
+export const refreshUrl = '/users/refresh';
 
 export const userApi = {
   register: (url: string, originRegisterData: RegisterUserRequest): Promise<any> => {
@@ -22,5 +23,8 @@ export const userApi = {
   },
   addFriend: (url: string, userId: string, friendId: string) => {
     return axiosClient.post(url, { userId, friendId });
-  }
+  },
+  refresh: (url: string, originRefreshData: any): Promise<any> => {
+    return axiosClient.post(url, originRefreshData);
+  },
 }

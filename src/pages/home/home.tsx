@@ -4,24 +4,15 @@ import NavBar from "navbar/nav-bar";
 import HomeLeft from "pages/home/home-left/home-left";
 import HomeMiddle from "pages/home/home-middle/home-middle";
 import HomeRight from "pages/home/home-right/home-right";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router";
-import { SelectorIsLogin } from "redux/reducers/authentication.reducer";
 
 import './home.scss';
 
 function Home() {
-  const navigate =  useNavigate();
-  const isLogin = useSelector(SelectorIsLogin);
+  const token = localStorage.getItem('access_token');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const user = localStorage.getItem('user');
 
-  useEffect(() => {
-    if(!isLogin) {
-      navigate('/sign-in')
-    }
-  }, [isLogin])
-
-  return isLogin && (
+  return token && refreshToken && JSON.parse(user || '') && (
     <>
       <NavBar />
       <div className="app-home">

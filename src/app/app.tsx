@@ -1,5 +1,5 @@
 
-import { userApi, validateUrl } from "api";
+import { userApi, validateUrl, refreshUrl } from "api";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
@@ -22,9 +22,21 @@ function App() {
         if(status === 200 && data.status === 'success') {
           dispatch({ type: LOGIN.SUCCESS, token, refreshToken, user: JSON.parse(user) });
         } else {
-          navigate('/');
+          userApi.refresh(refreshUrl, { refreshToken }).then(result => {
+            const { status, data } = result;
+  
+            if(status === 200 && data.status === 'success') {
+              dispatch({ type: LOGIN.SUCCESS, token: data.token, refreshToken: data.refreshToken, user: data.user });
+            } else {
+              navigate('/');
+            }
+          }).catch(() => {
+            navigate('/');
+          })
         }
       })
+    } else {
+      navigate('/sign-in');
     }
   }, [])
 

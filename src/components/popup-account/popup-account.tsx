@@ -12,7 +12,7 @@ function PopupAccount() {
 
   useEffect(() => {
     if(!isLogin) {
-      navigate('/')
+      navigate('/sign-in')
     }
   }, [isLogin])
   
