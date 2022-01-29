@@ -7,10 +7,13 @@ import Search from 'components/search/search';
 import { navBarBlursAccount, navBarBlursMessenger, navBarBlursNofitication } from 'const';
 
 import './nav-bar.scss';
+import { useSelector } from 'react-redux';
+import { SelectorAccessUser } from 'redux/reducers/authentication.reducer';
 
 function NavBar() {
   const [popupName, setPopupName] = useState('');
   const [focus, setFocus] = useState(false);
+  const user = useSelector(SelectorAccessUser);
 
   useEffect(() => {
     function eventBlur(event: any) {
@@ -89,7 +92,7 @@ function NavBar() {
         </div>
         <div className="nav-right">
           <div className="user">
-            <NavLink to="/profile" className="user-link">
+            <NavLink to={`/${user.user_name}`} className="user-link">
               <span className="user-icon"> </span>
               <span className="user-text">Nguyễn</span>
             </NavLink>

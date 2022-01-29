@@ -1,13 +1,32 @@
 
 
 
-import Post from 'components/post/post';
 import NavBar from 'navbar/nav-bar';
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import { SelectorAccessUser } from 'redux/reducers/authentication.reducer';
+import { useLocation } from "react-router-dom";
+import { Outlet } from 'react-router-dom';
 import './profile.scss';
 
 function Profile({ isShowNavBar }: any) {
-  return (
+  const user = useSelector(SelectorAccessUser);
+  const location = useLocation();
+
+  function getFullName(first_name: string = '', last_name: string = ''): string { 
+    return `${first_name} ${last_name}`;
+  }
+
+  function getFirstCharacter(first_name: string = ''): string {
+    return first_name[0];
+  }
+
+  function friendRoute(pathName: string): boolean {
+    const paths = pathName.split('/');
+    return paths[1].includes('friends');
+  }
+
+  return user && (
     <>
       { isShowNavBar && <NavBar /> }
       <div className="app-profile-container">
@@ -20,22 +39,43 @@ function Profile({ isShowNavBar }: any) {
               <div className="images-upload-button">Thêm ảnh bìa</div>
               <div className="images-avatar">
                 <div className="avatar-container">
-                  <div className="avatar"></div>
+                  <div className="avatar" style={{backgroundColor: user.background_color}}>
+                    {
+                      user.avatar 
+                      ? <img src={user.avatar} alt="" />
+                      : <span className="avatar-character">{getFirstCharacter(user.first_name)}</span>
+                    }
+                  </div>
                   <div className="avatar-upload-button"></div>
                 </div>
               </div>
             </div>
-            <div className="profile-name">Vương Nguyễn</div>
+            <div className="profile-name">{getFullName(user.first_name, user.last_name)}</div>
             <div className="profile-navigate">
               <ul className="navigate-landing">
                 <li className="landing-item">
-                  <NavLink to="/" className="item-icon"><span>Bài viết</span></NavLink>
+                  {
+                    friendRoute(location.pathname) 
+                    ? <NavLink to={`/friends/${user.user_name}/posts`} className="item-icon"><span>Bài viết</span></NavLink>
+                    : <NavLink to={`/${user.user_name}/posts`} className="item-icon"><span>Bài viết</span></NavLink>
+                  }
+                  
                 </li>
                 <li className="landing-item">
-                  <NavLink to="/friends" className="item-icon"><span>Bạn bè</span></NavLink>
+                  {
+                    friendRoute(location.pathname) 
+                    ? <NavLink to={`/friends/${user.user_name}/friends`} className="item-icon"><span>Bạn bè</span></NavLink>
+                    : <NavLink to={`/${user.user_name}/friends`} className="item-icon"><span>Bạn bè</span></NavLink>
+                  }
+                  
                 </li>
                 <li className="landing-item">
-                  <NavLink to="/watch" className="item-icon"><span>Ảnh</span></NavLink>
+                  { 
+                    friendRoute(location.pathname) 
+                    ? <NavLink to={`/friends/${user.user_name}/photos`} className="item-icon"><span>Ảnh</span></NavLink>
+                    : <NavLink to={`/${user.user_name}/photos`} className="item-icon"><span>Ảnh</span></NavLink>
+                  }
+                  
                 </li>
                 <li className="landing-item">
                   <a href="/" className="item-icon"><span>Xem thêm</span></a>
@@ -44,55 +84,7 @@ function Profile({ isShowNavBar }: any) {
             </div>
           </div>
           <div className="profile-container">
-            <div className="profile-body-left">
-              <div className="profile-images-conatiner">
-                <div className="images-header">Ảnh</div>
-              </div>
-              <div className="profile-friends-conatiner">
-                <div className="friends-header">Bạn bè</div>
-                <div className="friends-amount">45 người bạn</div>
-                <div className="friends-list">
-                  <div className="friends-item">
-                    <span className="item-image"></span>
-                    <span className="item-name">Name</span>
-                  </div>
-                  <div className="friends-item">
-                    <span className="item-image"></span>
-                    <span className="item-name">Name</span>
-                  </div>
-                  <div className="friends-item">
-                    <span className="item-image"></span>
-                    <span className="item-name">Name</span>
-                  </div>
-                  <div className="friends-item">
-                    <span className="item-image"></span>
-                    <span className="item-name">Name</span>
-                  </div>
-                  <div className="friends-item">
-                    <span className="item-image"></span>
-                    <span className="item-name">Name</span>
-                  </div>
-                  <div className="friends-item">
-                    <span className="item-image"></span>
-                    <span className="item-name">Name</span>
-                  </div>
-                  <div className="friends-item friends-item-fix">
-                  </div>
-                  <div className="friends-item friends-item-fix">
-                  </div>
-                  <div className="friends-item friends-item-fix">
-                  </div>
-                  <div className="friends-item friends-item-fix">
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="profile-body-right">
-              <div className="post-list">
-                <Post />
-                <Post />
-              </div>
-            </div>
+            <Outlet />
           </div>
         </div>
       </div>

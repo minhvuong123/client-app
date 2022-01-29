@@ -41,59 +41,60 @@
         margin-top: 0.5rem;
         padding-bottom: 4rem;
         .know-item {
-          display: flex;
-          padding: 1rem;
-          border-radius: 0.5rem;
-          cursor: pointer;
-          .know-item-icon {
-            min-width: 60px;
-            width: 60px;
-            height: 60px;
-            background-color: #e4e6eb;
-            border-radius: 50%;
-          }
-          .know-item-content {
+          .item-link {
             display: flex;
-            flex-direction: column;
-            margin-left: 1rem;
-            .text {
-              font-weight: 500;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            .know-item-icon {
+              min-width: 70px;
+              width: 70px;
+              height: 70px;
+              background-color: #e4e6eb;
+              border-radius: 50%;
             }
-            .together-friend {
-              font-size: 1.2rem;
-              color: #65676b;
-            }
-            .actions {
+            .know-item-content {
               display: flex;
-              margin-top: 1rem;
-              .action-button {
-                padding: 0.8rem 1.5rem;
-                border-radius: 0.5rem;
-                font-size: 1.6rem;
+              flex-direction: column;
+              margin-left: 1rem;
+              .text {
                 font-weight: 500;
-                cursor: pointer;
-                &.add-friend {
-                  background-color: #1877f2;
-                  color: #fff;
-                  &:hover {
-                    background-color: #166ad8;
+              }
+              .together-friend {
+                font-size: 1.2rem;
+                color: #65676b;
+              }
+              .actions {
+                display: flex;
+                margin-top: 1rem;
+                .action-button {
+                  padding: 0.8rem 1.5rem;
+                  border-radius: 0.5rem;
+                  font-size: 1.4rem;
+                  font-weight: 500;
+                  cursor: pointer;
+                  &.add-friend {
+                    background-color: #1877f2;
+                    color: #fff;
+                    &:hover {
+                      background-color: #166ad8;
+                    }
+                    &.friend-added {
+                      display: none;
+                    }
                   }
-                  &.friend-added {
-                    display: none;
-                  }
-                }
-                &.remove-friend {
-                  background-color: #e4e6eb;
-                  color: #000;
-                  margin-left: 1rem;
-                  &:hover {
-                    background-color: #d0d3d9;
+                  &.remove-friend {
+                    background-color: #e4e6eb;
+                    color: #000;
+                    margin-left: 1rem;
+                    &:hover {
+                      background-color: #d0d3d9;
+                    }
                   }
                 }
               }
             }
           }
-
           &:hover {
             background-color: #f2f2f2;
           }

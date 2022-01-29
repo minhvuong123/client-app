@@ -5,6 +5,7 @@ import { addFriendUrl, suggestFriendsUrl, userApi } from 'api';
 import { UserResponse } from 'model';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import { SelectorAccessUser } from 'redux/reducers/authentication.reducer';
 import './friends-list.scss';
 
@@ -19,8 +20,8 @@ function FriendsList() {
       if (user._id) {
         const suggestFriends = await userApi.suggestFriends(suggestFriendsUrl, user._id, 20);
         const { status, data } = suggestFriends
-        if (status === 200 && data.users) {
-          setFriends(data.users);
+        if (status === 200 && data.friends) {
+          setFriends(data.friends);
         }
       }
     }
@@ -32,7 +33,9 @@ function FriendsList() {
     return `${last_name} ${first_name}`
   }
 
-  async function handleAddFriend(userId: string, friendId: string) {
+  async function handleAddFriend(event: any, userId: string, friendId: string) {
+    event.preventDefault();
+
     const friendRespone = await userApi.addFriend(addFriendUrl, userId, friendId);
     const { status, data } = friendRespone;
 
@@ -67,18 +70,20 @@ function FriendsList() {
               && friends.map(friend => {
                 return (
                   <div key={friend._id} className="know-item">
-                    <span className="know-item-icon"></span>
-                    <div className="know-item-content">
-                      <span className="text">{mapName(friend.first_name, friend.last_name)}</span>
-                      <span className="together-friend">1 bạn chung</span>
-                      <div className="actions">
-                        <div 
-                          className={`action-button add-friend ${isAddedFriend(friend._id, addedFriendsId) ? 'friend-added' : ''}`} 
-                          onClick={() => handleAddFriend(user._id, friend._id)}
-                        > Thêm bạn bè</div>
-                        <div className="action-button remove-friend">Xóa, gỡ bỏ</div>
+                    <NavLink to={`/friends/${user.user_name}/posts`} className="item-link">
+                      <span className="know-item-icon"></span>
+                      <div className="know-item-content">
+                        <span className="text">{mapName(friend.first_name, friend.last_name)}</span>
+                        {/* <span className="together-friend">1 bạn chung</span> */}
+                        <div className="actions">
+                          <div 
+                            className={`action-button add-friend ${isAddedFriend(friend._id, addedFriendsId) ? 'friend-added' : ''}`} 
+                            onClick={(event) => handleAddFriend(event, user._id, friend._id)}
+                          > Thêm bạn bè</div>
+                          <div className="action-button remove-friend">Xóa, gỡ bỏ</div>
+                        </div>
                       </div>
-                    </div>
+                    </NavLink>
                   </div>
                 )
               })

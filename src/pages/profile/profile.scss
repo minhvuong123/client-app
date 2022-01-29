@@ -52,6 +52,15 @@
               border-radius: 50%;
               background-color: #dcdbdb;
               cursor: pointer;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              .avatar-character {
+                font-size: 60px;
+                line-height: 1;
+                display: inline-block;
+                color: #fff;
+              }
               &:active {
                 transform: scale(0.95);
               }

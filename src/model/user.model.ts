@@ -19,6 +19,7 @@ export interface UserResponse {
   last_name: string;
   avatar: string;
   background_image: string;
+  user_name: string;
   email_phone: string;
   password: string;
   birthday: string;

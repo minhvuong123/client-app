@@ -1,5 +1,6 @@
 
 import { userApi, validateUrl, refreshUrl } from "api";
+import NavBar from "navbar/nav-bar";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
@@ -42,6 +43,7 @@ function App() {
 
   return (
     <div className="app-container">
+      <NavBar />
       <RenderRoutes routes={RoutesPath} />
     </div>
   );
