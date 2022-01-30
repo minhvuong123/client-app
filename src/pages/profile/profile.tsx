@@ -7,11 +7,23 @@ import { NavLink } from 'react-router-dom';
 import { SelectorAccessUser } from 'redux/reducers/authentication.reducer';
 import { useLocation } from "react-router-dom";
 import { Outlet } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { UserResponse } from 'model';
+
 import './profile.scss';
 
 function Profile({ isShowNavBar }: any) {
-  const user = useSelector(SelectorAccessUser);
+  const userOwn = useSelector(SelectorAccessUser);
+  const [userDisplay, setUserDisplay] = useState({} as UserResponse);
   const location = useLocation();
+
+  useEffect(() => {
+    if(friendRoute(location.pathname)) {
+      setUserDisplay(location.state.userPreview);
+    } else {
+      setUserDisplay(userOwn);
+    }
+  }, [location.pathname, location.state.userPreview, userOwn])
 
   function getFullName(first_name: string = '', last_name: string = ''): string { 
     return `${first_name} ${last_name}`;
@@ -26,7 +38,7 @@ function Profile({ isShowNavBar }: any) {
     return paths[1].includes('friends');
   }
 
-  return user && (
+  return userDisplay ? (
     <>
       { isShowNavBar && <NavBar /> }
       <div className="app-profile-container">
@@ -39,41 +51,41 @@ function Profile({ isShowNavBar }: any) {
               <div className="images-upload-button">Thêm ảnh bìa</div>
               <div className="images-avatar">
                 <div className="avatar-container">
-                  <div className="avatar" style={{backgroundColor: user.background_color}}>
+                  <div className="avatar" style={{backgroundColor: userDisplay.background_color}}>
                     {
-                      user.avatar 
-                      ? <img src={user.avatar} alt="" />
-                      : <span className="avatar-character">{getFirstCharacter(user.first_name)}</span>
+                      userDisplay.avatar 
+                      ? <img src={userDisplay.avatar} alt="" />
+                      : <span className="avatar-character">{getFirstCharacter(userDisplay.first_name)}</span>
                     }
                   </div>
                   <div className="avatar-upload-button"></div>
                 </div>
               </div>
             </div>
-            <div className="profile-name">{getFullName(user.first_name, user.last_name)}</div>
+            <div className="profile-name">{getFullName(userDisplay.first_name, userDisplay.last_name)}</div>
             <div className="profile-navigate">
               <ul className="navigate-landing">
                 <li className="landing-item">
                   {
                     friendRoute(location.pathname) 
-                    ? <NavLink to={`/friends/${user.user_name}/posts`} className="item-icon"><span>Bài viết</span></NavLink>
-                    : <NavLink to={`/${user.user_name}/posts`} className="item-icon"><span>Bài viết</span></NavLink>
+                    ? <NavLink to={`/friends/${userDisplay.user_name}/posts`} className="item-icon"><span>Bài viết</span></NavLink>
+                    : <NavLink to={`/${userDisplay.user_name}/posts`} className="item-icon"><span>Bài viết</span></NavLink>
                   }
                   
                 </li>
                 <li className="landing-item">
                   {
                     friendRoute(location.pathname) 
-                    ? <NavLink to={`/friends/${user.user_name}/friends`} className="item-icon"><span>Bạn bè</span></NavLink>
-                    : <NavLink to={`/${user.user_name}/friends`} className="item-icon"><span>Bạn bè</span></NavLink>
+                    ? <NavLink to={`/friends/${userDisplay.user_name}/friends`} className="item-icon"><span>Bạn bè</span></NavLink>
+                    : <NavLink to={`/${userDisplay.user_name}/friends`} className="item-icon"><span>Bạn bè</span></NavLink>
                   }
                   
                 </li>
                 <li className="landing-item">
                   { 
                     friendRoute(location.pathname) 
-                    ? <NavLink to={`/friends/${user.user_name}/photos`} className="item-icon"><span>Ảnh</span></NavLink>
-                    : <NavLink to={`/${user.user_name}/photos`} className="item-icon"><span>Ảnh</span></NavLink>
+                    ? <NavLink to={`/friends/${userDisplay.user_name}/photos`} className="item-icon"><span>Ảnh</span></NavLink>
+                    : <NavLink to={`/${userDisplay.user_name}/photos`} className="item-icon"><span>Ảnh</span></NavLink>
                   }
                   
                 </li>
@@ -89,7 +101,7 @@ function Profile({ isShowNavBar }: any) {
         </div>
       </div>
     </>
-  );
+  ) : <></>;
 }
 
 export default Profile;

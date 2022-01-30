@@ -4,15 +4,17 @@
 import { addFriendUrl, suggestFriendsUrl, userApi } from 'api';
 import { UserResponse } from 'model';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import { addUserPreview } from 'redux/actions/user.action';
 import { SelectorAccessUser } from 'redux/reducers/authentication.reducer';
 import './friends-list.scss';
 
 function FriendsList() {
   const user = useSelector(SelectorAccessUser) as UserResponse;
   const [friends, setFriends] = useState([] as UserResponse[]);
-  const [addedFriendsId, setaddedFriendsId] = useState([] as string[]);
+  const [addedFriendsId, setAddedFriendsId] = useState([] as string[]);
+  const dispatch = useDispatch();
 
 
   useEffect(() => {
@@ -40,10 +42,16 @@ function FriendsList() {
     const { status, data } = friendRespone;
 
     if(status === 200 && data.status === "success") {
-      // handle success 
+      // save added friend to hidden button add friend
       const addedFriendsIdClone = [...addedFriendsId];
       addedFriendsIdClone.push(friendId);
-      setaddedFriendsId(addedFriendsIdClone);
+      setAddedFriendsId(addedFriendsIdClone);
+
+      // add friend to userPreview in store
+      const friend = friends.find(friend => friend._id === friendId);
+      if(friend) {
+        dispatch(addUserPreview(friend))
+      }
     }
   }
 
@@ -70,7 +78,7 @@ function FriendsList() {
               && friends.map(friend => {
                 return (
                   <div key={friend._id} className="know-item">
-                    <NavLink to={`/friends/${user.user_name}/posts`} className="item-link">
+                    <NavLink to={`/friends/${friend.user_name}/posts`} state={{ userPreview: friend }} className="item-link">
                       <span className="know-item-icon"></span>
                       <div className="know-item-content">
                         <span className="text">{mapName(friend.first_name, friend.last_name)}</span>

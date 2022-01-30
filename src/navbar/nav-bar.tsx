@@ -92,7 +92,7 @@ function NavBar() {
         </div>
         <div className="nav-right">
           <div className="user">
-            <NavLink to={`/${user.user_name}`} className="user-link">
+            <NavLink to={`/${user.user_name}/posts`} className="user-link">
               <span className="user-icon"> </span>
               <span className="user-text">Nguyễn</span>
             </NavLink>

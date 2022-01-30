@@ -8,6 +8,7 @@
   z-index: 1;
   height: calc(100vh - 53.4px);
   overflow-y: auto;
+  overscroll-behavior-y: contain;
   &:hover {
     overflow-y: auto;
     &::-webkit-scrollbar-thumb {

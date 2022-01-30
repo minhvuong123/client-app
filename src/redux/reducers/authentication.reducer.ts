@@ -4,13 +4,14 @@ const authentication = {
   isLogin: false,
   access_token: '',
   refreshToken: '',
-  user: {},
+  user: {}
 }
 
 // selector
 export const SelectorIsLogin = (state: any) => state.authentication.isLogin; 
 export const SelectorAccessToken = (state: any) => state.authentication.access_token; 
 export const SelectorAccessUser = (state: any) => state.authentication.user; 
+export const SelectorAccessUserPreview = (state: any) => state.authentication.userPreview; 
 
 // reducers
 export default function authenticationReducer(state = authentication, action: any) {

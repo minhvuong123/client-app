@@ -1,0 +1,107 @@
+.messenger-popup {
+  margin-left: 10px;
+  .popup-wrap {
+    width: 340px;
+    height: 455px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 12px 28px 0 rgba(0, 0, 0, 0.2), 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    .popup-header {
+      padding: 10px 8px;
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      z-index: 1;
+    }
+    .popup-content {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      .content-message {
+        flex-grow: 1;
+        overflow-y: auto;
+        overscroll-behavior-y: contain;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        .message-item {
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
+          width: 60%;
+          margin-top: 10px;
+          .message-text {
+            word-break: break-all;
+          }
+          .message-previewed {
+            background-color: #000;
+            min-width: 15px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            align-self: flex-end;
+            margin-left: 10px;
+          }
+          .message-user {
+            background-color: #000;
+            min-width: 30px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            align-self: flex-end;
+            margin-right: 10px;
+          }
+          .message-text {
+            padding: 5px 10px;
+            border-radius: 10px;
+            line-height: 20px;
+          }
+          &.message-owner{
+            align-self: flex-end;
+            .message-text {
+              flex-grow: 1;
+              background-color: #0084ff;
+              color: #fff;
+            }
+          }
+          &.message-friend {
+            justify-content: flex-start;
+            .message-text {
+              flex-grow: 1;
+              background-color: #e4e6eb;
+            }
+          }
+        }
+      }
+      .content-control {
+        display: flex;
+        align-items: center;
+        padding: 20px 10px;
+        .message-input-container {
+          flex-grow: 1;
+          background-color: #f0f2f5;
+          border-radius: 15px;
+          padding: 5px 10px;
+          .message-input {
+            width: 100%;
+            word-break: break-all;
+            overflow-y: auto;
+            max-height: 100px;
+            &:focus {
+              border: unset;
+              outline: unset;
+              box-shadow: unset;
+            }
+          }
+        }
+        .message-send {
+          align-self: flex-end;
+        }
+      }
+    }
+  }
+}

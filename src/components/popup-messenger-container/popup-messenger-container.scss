@@ -1,0 +1,8 @@
+.messenger-popup-container {
+  position: fixed;
+  bottom: 0;
+  right: 100px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: row;
+}
