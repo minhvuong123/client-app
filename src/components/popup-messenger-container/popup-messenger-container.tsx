@@ -1,5 +1,6 @@
-import './popup-messenger-container.scss';
+
 import PopupMessenger from './popup-messenger/popup-messenger';
+import './popup-messenger-container.scss';
 
 function PopupMessengerContainer() {
   return (

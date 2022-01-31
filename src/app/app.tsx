@@ -44,7 +44,7 @@ function App() {
   return (
     <div className="app-container">
       <RenderRoutes routes={RoutesPath} />
-      <PopupMessengerContainer />
+      {/* <PopupMessengerContainer /> */}
     </div>
   );
 }

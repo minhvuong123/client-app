@@ -18,12 +18,8 @@ function Profile({ isShowNavBar }: any) {
   const location = useLocation();
 
   useEffect(() => {
-    if(friendRoute(location.pathname)) {
-      setUserDisplay(location.state.userPreview);
-    } else {
-      setUserDisplay(userOwn);
-    }
-  }, [location.pathname, location.state.userPreview, userOwn])
+    setUserDisplay(location.state.user);
+  }, [location.pathname, location, userOwn])
 
   function getFullName(first_name: string = '', last_name: string = ''): string { 
     return `${first_name} ${last_name}`;
@@ -93,6 +89,10 @@ function Profile({ isShowNavBar }: any) {
                   <a href="/" className="item-icon"><span>Xem thêm</span></a>
                 </li>
               </ul>
+              <div className="landing-actions">
+                <button className="landing-button button-friend">Bạn bè</button>
+                <button className="landing-button button-message">Nhắn tin</button>
+              </div>
             </div>
           </div>
           <div className="profile-container">

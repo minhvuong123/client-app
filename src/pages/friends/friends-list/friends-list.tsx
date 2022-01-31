@@ -78,7 +78,7 @@ function FriendsList() {
               && friends.map(friend => {
                 return (
                   <div key={friend._id} className="know-item">
-                    <NavLink to={`/friends/${friend.user_name}/posts`} state={{ userPreview: friend }} className="item-link">
+                    <NavLink to={`/friends/${friend.user_name}/posts`} state={{ user: friend }} className="item-link">
                       <span className="know-item-icon"></span>
                       <div className="know-item-content">
                         <span className="text">{mapName(friend.first_name, friend.last_name)}</span>

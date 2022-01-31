@@ -1,8 +1,12 @@
 .home-middle-container {
-  flex-basis: 774px;
-  padding: 1rem 8rem 0;
+  flex-basis: 785px;
+  padding: 1rem 10rem 0;
   position: relative;
   z-index: 1;
+  .home-middle {
+    max-width: 500px;
+    margin: auto;
+  }
 
   @media screen and (max-width: 882px) {
     max-width: 600px;

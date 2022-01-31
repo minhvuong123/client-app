@@ -3,8 +3,9 @@
     display: flex;
     align-items: center;
     background-color: #fff;
-    padding: .8rem;
-    border-radius: .5rem;
+    padding: 1rem;
+    border-radius: 0.8rem 1rem;
+    margin-bottom: 3rem;
     .post-icon {
       background-color: #cfcece;
       display: inline-block;
@@ -15,12 +16,16 @@
       cursor: pointer;
     }
     .post-create {
-      background-color: #e4e6eb;
-      padding: .6rem;
-      border-radius: 1rem;
+      background-color: #f0f2f5;
+      padding: 1.1rem 1.5rem;
+      border-radius: 2rem;
       width: 100%;
-      margin-left: .5rem;
+      margin-left: 0.5rem;
       cursor: pointer;
+      line-height: 1;
+      &:hover{
+        background-color: #e4e6eb;
+      }
     }
   }
 }
