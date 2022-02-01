@@ -1,9 +1,37 @@
 
 
+import { getPostsUrl, postApi } from 'api/post.api';
+import CreatePost from 'components/create-post/create-post';
 import Post from 'components/post/post';
+import { IPostResponse } from 'model';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router';
 import './profile-home.scss';
 
 function ProfileHome() {
+  const [posts, setPosts] = useState([] as IPostResponse[]);
+  const location = useLocation();
+
+  useEffect(() => {
+    async function getPosts() {
+      const id = location.state.user._id;
+      const responsePost = await postApi.gettingPosts(`${getPostsUrl}/user_id/${id}/page/${0}/limit/${10}`);
+      const { status, data } = responsePost;
+      const posts: IPostResponse[] = data.posts;
+
+      if(status === 200 && posts) {
+        setPosts(posts);
+      }
+    }
+
+    getPosts();
+  }, [location.state])
+
+  function friendRoute(pathName: string): boolean {
+    const paths = pathName.split('/');
+    return paths[1].includes('friends');
+  }
+
   return (
     <>
       <div className="profile-body-left">
@@ -46,9 +74,13 @@ function ProfileHome() {
         </div>
       </div>
       <div className="profile-body-right">
+        { !friendRoute(location.pathname) && <CreatePost /> }
         <div className="post-list">
-          <Post />
-          <Post />
+          {
+            posts.map((post: IPostResponse) => {
+              return <Post key={post._id} post={post} />
+            })
+          }
         </div>
       </div>
     </>

@@ -1,7 +1,7 @@
 
 import { userApi, loginUrl } from 'api';
-import { LoginRequest, LoginResponse, PayloadAction, ResponseApiModel, UserResponse } from 'model';
-import { fork, call, take, put } from 'redux-saga/effects';
+import { ILoginSuccess, LoginRequest, LoginResponse, PayloadAction, ResponseApiModel, UserResponse } from 'model';
+import { fork, call, take, put, takeEvery, all } from 'redux-saga/effects';
 import { LOGIN, loginSuccess, LOGOUT } from 'redux/actions/authentication.action';
 
 
@@ -43,6 +43,7 @@ function* flowLogin() {
     yield call(handleLogout);
   }
 }
+
 
 export default function* authenticationSaga() {
   yield fork(flowLogin);

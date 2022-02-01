@@ -18,103 +18,10 @@
     height: 100%;
   }
   .popup-create-post {
-    display: flex;
-    flex-direction: column;
     max-width: 500px;
     width: 500px;
     background-color: #fff;
     z-index: 2;
     border-radius: 1rem;
-    .popup-header {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      padding: 1.5rem;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-      .header-title {
-        flex-grow: 1;
-        text-align: center;
-        font-size: 20px;
-        font-weight: bold;
-      }
-      .header-close {
-        cursor: pointer;
-      }
-    }
-    .popup-content {
-      padding: 1.5rem;
-      .popup-user {
-        display: flex;
-        align-items: center;
-        .user-icon {
-          min-width: 40px;
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          background-color: #e4e6eb;
-        }
-        .user-info {
-          display: flex;
-          flex-direction: column;
-          margin-left: 1rem;
-          font-weight: 500;
-          .user-name {
-            font-size: 1.5rem;
-          }
-          .user-shared {
-            font-size: 1.3rem;
-          }
-        }
-      }
-      .content-control {
-        .typing-container {
-          padding-bottom: 4rem;
-          .typing-text {
-            padding: 1rem 0;
-            line-height: 1;
-            word-break: break-all;
-            max-height: 100px;
-            overflow-y: auto;
-            overscroll-behavior-y: contain;
-            cursor: text;
-            &[placeholder]:empty::before {
-              content: attr(placeholder);
-              color: #555;
-              font-size: 20px;
-            }
-            &[placeholder]:empty:focus::before {
-              content: "";
-            }
-            &:focus {
-              border: unset;
-              outline: unset;
-              box-shadow: unset;
-            }
-          }
-        }
-        .control-actions {
-          display: flex;
-          flex-direction: row;
-          justify-content: flex-end;
-          margin-bottom: 2rem;
-          .control-item {
-            cursor: pointer;
-          }
-        }
-        .control-post {
-          text-align: center;
-          padding: 1rem;
-          background-color: #1b74e4;
-          color: #fff;
-          line-height: 1;
-          border-radius: 1rem;
-          cursor: pointer;
-          font-weight: 500;
-          &:hover {
-            background-color: #0661d4;
-          }
-        }
-      }
-    }
   }
 }

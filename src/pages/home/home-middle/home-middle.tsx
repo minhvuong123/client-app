@@ -9,8 +9,8 @@ function HomeMiddle() {
     <div className="home-middle-container">
       <div className="home-middle">
         <CreatePost />
-        <Post />
-        <Post />
+        {/* <Post />
+        <Post /> */}
       </div>  
     </div>
   );

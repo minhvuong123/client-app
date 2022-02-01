@@ -104,7 +104,12 @@ const RoutesPath = [
         element: <ProfilePhotos />
       },
     ]
-  }
+  },
+  { 
+    id: '404',
+    path: '404',
+    element: <NotFound />
+  },
 ]
 
 export default RoutesPath;

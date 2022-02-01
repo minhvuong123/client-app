@@ -21,7 +21,6 @@ export interface UserResponse {
   background_image: string;
   user_name: string;
   email_phone: string;
-  password: string;
   birthday: string;
   background_color: string;
   createdAt: string;
@@ -37,4 +36,10 @@ export interface LoginResponse {
   token: string;
   refreshToken: string;
   user: any;
+}
+
+export interface ILoginSuccess {
+  token: string;
+  refreshToken: string;
+  user: UserResponse;
 }

@@ -3,7 +3,7 @@
 
 import NavBar from 'navbar/nav-bar';
 import { useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { SelectorAccessUser } from 'redux/reducers/authentication.reducer';
 import { useLocation } from "react-router-dom";
 import { Outlet } from 'react-router-dom';
@@ -16,10 +16,16 @@ function Profile({ isShowNavBar }: any) {
   const userOwn = useSelector(SelectorAccessUser);
   const [userDisplay, setUserDisplay] = useState({} as UserResponse);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    setUserDisplay(location.state.user);
-  }, [location.pathname, location, userOwn])
+    if(location.state && location.state.user) {
+      setUserDisplay(location.state.user);
+    } else {
+      navigate('/404')
+    }
+    
+  }, [location, userOwn, navigate])
 
   function getFullName(first_name: string = '', last_name: string = ''): string { 
     return `${first_name} ${last_name}`;
@@ -64,24 +70,36 @@ function Profile({ isShowNavBar }: any) {
                 <li className="landing-item">
                   {
                     friendRoute(location.pathname) 
-                    ? <NavLink to={`/friends/${userDisplay.user_name}/posts`} className="item-icon"><span>Bài viết</span></NavLink>
-                    : <NavLink to={`/${userDisplay.user_name}/posts`} className="item-icon"><span>Bài viết</span></NavLink>
+                    ? <NavLink to={`/friends/${userDisplay.user_name}/posts`} state={{ user: userDisplay }} className="item-icon">
+                      <span>Bài viết</span>
+                    </NavLink>
+                    : <NavLink to={`/${userDisplay.user_name}/posts`} state={{ user: userDisplay }} className="item-icon">
+                      <span>Bài viết</span>
+                    </NavLink>
                   }
                   
                 </li>
                 <li className="landing-item">
                   {
                     friendRoute(location.pathname) 
-                    ? <NavLink to={`/friends/${userDisplay.user_name}/friends`} className="item-icon"><span>Bạn bè</span></NavLink>
-                    : <NavLink to={`/${userDisplay.user_name}/friends`} className="item-icon"><span>Bạn bè</span></NavLink>
+                    ? <NavLink to={`/friends/${userDisplay.user_name}/friends`} state={{ user: userDisplay }} className="item-icon">
+                      <span>Bạn bè</span>
+                    </NavLink>
+                    : <NavLink to={`/${userDisplay.user_name}/friends`} state={{ user: userDisplay }} className="item-icon">
+                      <span>Bạn bè</span>
+                    </NavLink>
                   }
                   
                 </li>
                 <li className="landing-item">
                   { 
                     friendRoute(location.pathname) 
-                    ? <NavLink to={`/friends/${userDisplay.user_name}/photos`} className="item-icon"><span>Ảnh</span></NavLink>
-                    : <NavLink to={`/${userDisplay.user_name}/photos`} className="item-icon"><span>Ảnh</span></NavLink>
+                    ? <NavLink to={`/friends/${userDisplay.user_name}/photos`} state={{ user: userDisplay }} className="item-icon">
+                      <span>Ảnh</span>
+                    </NavLink>
+                    : <NavLink to={`/${userDisplay.user_name}/photos`} state={{ user: userDisplay }} className="item-icon">
+                      <span>Ảnh</span>
+                    </NavLink>
                   }
                   
                 </li>
