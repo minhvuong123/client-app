@@ -6,7 +6,7 @@
     border-radius: .5rem;
     margin-top: .8rem;
     .comment-icon {
-      background-color: #cfcece;
+      background-color: #e4e6eb;
       display: inline-block;
       border-radius: 50%;
       min-width: 40px;
@@ -42,6 +42,7 @@
         flex-grow: 1;
         cursor: text;
         word-break: break-word;
+        font-size: 1.4rem;
         &[placeholder]:empty:before {
           content: attr(placeholder);
           color: #555; 
@@ -53,7 +54,7 @@
         }
       }
     }
-    .comment-extension {
+    .create-comment-extension {
       align-self: flex-end;
       .comment-extension-item {
         margin-left: .7rem;

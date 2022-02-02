@@ -2,10 +2,10 @@
 import { ICommentRequest } from "model";
 import { axiosClient } from "./axiosClient.api";
 
-export const addingCommentUrl = '/posts/addComment';
-export const getCommentsUrl = '/posts/getComments';
+export const addingCommentUrl = '/comments/addComment';
+export const getCommentsUrl = '/comments/getComments';
 
-export const postApi = {
+export const commentApi = {
   addingComment: (url: string, originCommentData: ICommentRequest): Promise<any> => {
     return axiosClient.post(url, originCommentData);
   },

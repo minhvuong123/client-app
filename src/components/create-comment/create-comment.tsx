@@ -1,4 +1,5 @@
 
+import { addingCommentUrl, commentApi } from 'api';
 import { addingPostCommentUrl, postApi } from 'api/post.api';
 import { ICommentRequest } from 'model';
 import { useSelector } from 'react-redux';
@@ -28,7 +29,14 @@ function CreateComment({ postId, commentId, onComment }: any) {
           event.target.innerHTML = '';
         }
       } else if(commentId) { // send comment to comment's api
+        originCommentData._id = commentId;
+        const responseComment = await commentApi.addingComment(addingCommentUrl, originCommentData);
+        const { status, data } = responseComment;
 
+        if(status === 200 && data.message === 'success' && data.comment) {
+          onComment && onComment(data.comment);
+          event.target.innerHTML = '';
+        }
       }
     }
   }
@@ -46,7 +54,7 @@ function CreateComment({ postId, commentId, onComment }: any) {
             className="comment-editable"
             onKeyDown={handleKeyEnter}
           ></div>
-          <div className="comment-extension">
+          <div className="create-comment-extension">
             <span className="comment-extension-item">attach</span>
           </div>
         </div>

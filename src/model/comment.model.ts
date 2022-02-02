@@ -5,13 +5,13 @@ export interface ICommentRequest {
   comment_user: UserResponse;
   comment_text: string;
   emojis?: [];
-  comments?: ICommentResponse
+  comments?: ICommentResponse[]
 }
 
 export interface ICommentResponse {
   _id: string;
   comment_user: UserResponse;
   comment_text: string;
-  emojis?: [];
-  comments?: ICommentResponse
+  emojis: [];
+  comments: ICommentResponse[]
 }
