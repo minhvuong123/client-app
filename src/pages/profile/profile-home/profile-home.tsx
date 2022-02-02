@@ -24,7 +24,9 @@ function ProfileHome() {
       }
     }
 
-    getPosts();
+    if(location.state && location.state.user) {
+      getPosts();
+    }
   }, [location.state])
 
   function friendRoute(pathName: string): boolean {

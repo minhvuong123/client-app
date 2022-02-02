@@ -5,7 +5,8 @@ export interface IPostRequest {
   post_user: UserResponse;
   post_shared: string;
   post_text: string;
-  comments?: any
+  post_emoji?: any
+  post_comments?: any
 }
 
 export interface IPostResponse {
@@ -14,4 +15,11 @@ export interface IPostResponse {
   post_shared: string;
   post_text: string;
   post_comments: ICommentResponse[];
+  post_emoji?: any
+}
+
+export interface IEmoji {
+  _id: string;
+  emoji_user: UserResponse;
+  emoji_type: string;
 }

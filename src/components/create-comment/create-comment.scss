@@ -9,9 +9,9 @@
       background-color: #cfcece;
       display: inline-block;
       border-radius: 50%;
-      min-width: 30px;
-      width: 30px;
-      height: 30px;
+      min-width: 40px;
+      width: 40px;
+      height: 40px;
       cursor: pointer;
       align-self: flex-start;
       position: relative;
@@ -29,15 +29,17 @@
     }
     .comment-create {
       background-color: #e4e6eb;
-      padding: 1rem 1.5rem;
+      padding: .8rem 1rem;
       border-radius: 2rem;
       width: 100%;
-      margin-left: .5rem;
+      margin-left: 0.5rem;
       cursor: pointer;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
       .comment-editable {
         display: inline-block;
-        min-width: 79%;
-        max-width: 100%;
+        flex-grow: 1;
         cursor: text;
         word-break: break-word;
         &[placeholder]:empty:before {
@@ -52,8 +54,7 @@
       }
     }
     .comment-extension {
-      text-align: right;
-      float: right;
+      align-self: flex-end;
       .comment-extension-item {
         margin-left: .7rem;
       }

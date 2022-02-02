@@ -4,8 +4,10 @@
   position: relative;
   z-index: 1;
   .home-middle {
-    max-width: 500px;
     margin: auto;
+    @media screen and (max-width: 1200px) {
+      max-width: 500px;
+    }
   }
 
   @media screen and (max-width: 882px) {

@@ -1,12 +1,49 @@
 import htmlParse from 'html-react-parser';
-import PostComment from 'components/post-comment/post-comment';
-import banXe from 'images/ban_xe.jpg';
+import { IEmoji } from 'model';
+import { ICommentResponse } from 'model/comment.model';
+import { memo, useEffect, useState } from 'react';
+import PostComments from './post-comments/post-comments';
+
 import './post.scss';
 
 function Post({ post }: any) {
+  const [comment, setComment] = useState(false);
+  const [comments, setComments] = useState([] as ICommentResponse[]);
+
+  useEffect(() => {
+    setComments(post.post_comments)
+  }, [post])
+
+  function handleChangeComment(): void {
+    setComment(!comment);
+  }
+
+  function handleCertainChangeComment(): void {
+    setComment(true);
+  }
+
+  function handleComment(comment: ICommentResponse): void {
+    setComments([...comments, comment]);
+  }
 
   function getFullName(first_name: string = '', last_name: string = ''): string { 
     return `${first_name} ${last_name}`;
+  }
+
+  function isComment(comments: ICommentResponse[]) {
+    return comments.length > 0;
+  }
+
+  function getTotalComment(comments: ICommentResponse[]) {
+    return comments.length;
+  }
+
+  function isEmoji(emojis: IEmoji[]) {
+    return emojis.length > 0;
+  }
+
+  function getTotalEmoji(emojis: IEmoji[]) {
+    return emojis.length;
   }
 
   return (
@@ -20,7 +57,7 @@ function Post({ post }: any) {
               <span className="text-time">1 giờ</span>
             </div>
           </div>
-          <div className="post-extension">...</div>
+          <div className="post-close">X</div>
         </div>
         <div className="post-content">
           { 
@@ -36,23 +73,32 @@ function Post({ post }: any) {
         </div>
         <div className="post-emotion-container">
           <div className="post-emotion">
-            🥰🥰 <span className="post-emotion-number">26</span>
+          { 
+            isEmoji(post.post_emojis) && 
+            <span className="post-emotion-number">{ getTotalEmoji(post.post_emojis) }</span> 
+          }
           </div>
-          <div className="post-comment-number">26 bình luận</div>
+          {
+            isComment(comments) &&
+            <div className="post-comment-number" onClick={handleChangeComment}>{ getTotalComment(comments) } bình luận</div> 
+          }
         </div>
         <div className="post-comments">
           <div className="post-actions">
             <div className="action">Thích</div>
-            <div className="action">Bình luận</div>
-            <div className="action">Chia sẻ</div>
+            <div className="action" onClick={handleCertainChangeComment}>Bình luận</div>
           </div>
-          <div className="comments">
-            <PostComment />
-          </div>
+          {
+            comment
+            && 
+            <div className="post-comments-container">
+              <PostComments post_id={post._id} post_comments={comments} onComment={handleComment} />  
+            </div>
+          }
         </div>
       </div>
     </div>
   );
 }
 
-export default Post;
+export default memo(Post);

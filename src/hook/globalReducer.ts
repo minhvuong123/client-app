@@ -1,10 +1,8 @@
 import { IGlobalState } from "model/globalState.model";
 
-
 // global action
 export const GLOBAL_STATE_SET_TYPING_POPUP = 'GLOBAL_STATE_SET_TYPING_POPUP';
 export const GLOBAL_STATE_SET_RAIDO_SHARED = 'GLOBAL_STATE_SET_RAIDO_SHARED';
-
 export const setTypingPopup = (typing: boolean) => {
 	return { 
 		type: GLOBAL_STATE_SET_TYPING_POPUP,
