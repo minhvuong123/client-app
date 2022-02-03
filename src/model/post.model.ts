@@ -23,3 +23,8 @@ export interface IEmoji {
   emoji_user: UserResponse;
   emoji_type: string;
 }
+
+export interface IEmojiAfterMapping {
+  emoji_users: UserResponse[];
+  emoji_type: string;
+}

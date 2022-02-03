@@ -1,18 +1,101 @@
+import { addingPostEmojiUrl, postApi, removePostEmojiUrl, updatePostEmojiUrl } from 'api';
+import { emojiKey, iconsEmoji } from 'const';
 import htmlParse from 'html-react-parser';
-import { IEmoji } from 'model';
+import { IEmoji, IEmojiAfterMapping } from 'model';
 import { ICommentResponse } from 'model/comment.model';
 import { memo, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { SelectorAccessUser } from 'redux/reducers/authentication.reducer';
 import PostComments from './post-comments/post-comments';
 
 import './post.scss';
 
 function Post({ post }: any) {
+  const user = useSelector(SelectorAccessUser);
   const [comment, setComment] = useState(false);
   const [comments, setComments] = useState([] as ICommentResponse[]);
+  const [emojis, setEmojis] = useState([] as IEmoji[]);
+  const [isLiked, setIsLiked] = useState(false);
 
   useEffect(() => {
     setComments(post.post_comments)
-  }, [post])
+  }, [post.post_comments])
+
+  useEffect(() => {
+    if(handleLiked(post.post_emojis)) {
+      setIsLiked(true);
+    } else {
+      setIsLiked(false);
+    }
+
+    setEmojis(post.post_emojis);
+  }, [post.post_emojis])
+
+  function handleLiked(emojis: IEmoji[]): boolean {
+    const emoji = emojis.find(emoji => emoji.emoji_user._id === user._id);
+
+    return emoji ? true : false
+  }
+
+  function mappingEmojis(emojis: IEmoji[]): IEmojiAfterMapping[]  {
+    const emojiResult = [];
+    const emojiLike: IEmojiAfterMapping = { emoji_type: 'like', emoji_users: [] };
+    const emojiHeart: IEmojiAfterMapping = { emoji_type: 'heart', emoji_users: [] };
+    const emojiCare: IEmojiAfterMapping = { emoji_type: 'care', emoji_users: [] };
+    const emojiHaha: IEmojiAfterMapping = { emoji_type: 'haha', emoji_users: [] };
+    const emojiWow: IEmojiAfterMapping = { emoji_type: 'wow', emoji_users: [] };
+    const emojiSad: IEmojiAfterMapping = { emoji_type: 'sad', emoji_users: [] };
+    const emojiAngry: IEmojiAfterMapping = { emoji_type: 'angry', emoji_users: [] };
+
+    emojis.forEach((emoji: IEmoji) => {
+      switch (emoji.emoji_type) {
+        case emojiKey.like: emojiLike.emoji_users.push(emoji.emoji_user); break;
+        case emojiKey.heart: emojiHeart.emoji_users.push(emoji.emoji_user); break;
+        case emojiKey.care: emojiCare.emoji_users.push(emoji.emoji_user); break;
+        case emojiKey.haha: emojiHaha.emoji_users.push(emoji.emoji_user); break;
+        case emojiKey.wow: emojiWow.emoji_users.push(emoji.emoji_user); break;
+        case emojiKey.sad: emojiSad.emoji_users.push(emoji.emoji_user); break;
+        case emojiKey.angry: emojiAngry.emoji_users.push(emoji.emoji_user); break;
+        default: break;
+      }
+    })
+    
+    if(emojiAngry.emoji_users.length > 0) {
+      emojiResult.push(emojiAngry)
+    }
+    
+    if(emojiSad.emoji_users.length > 0) {
+      emojiResult.push(emojiSad)
+    }
+    
+    if(emojiWow.emoji_users.length > 0) {
+      emojiResult.push(emojiWow)
+    }
+    
+    if(emojiHaha.emoji_users.length > 0) {
+      emojiResult.push(emojiHaha)
+    }
+    
+    if(emojiCare.emoji_users.length > 0) {
+      emojiResult.push(emojiCare)
+    }
+
+    if(emojiHeart.emoji_users.length > 0) {
+      emojiResult.push(emojiHeart)
+    }
+
+    if(emojiLike.emoji_users.length > 0) {
+      emojiResult.push(emojiLike)
+    }
+
+    return emojiResult
+  }
+
+  function getEmojiUrl(emoji_type: string): string {
+    const emojiUrl = iconsEmoji.find(emoji => emoji.id === emoji_type);
+
+    return emojiUrl && emojiUrl.iconUrl ? emojiUrl.iconUrl : '';
+  }
 
   function handleChangeComment(): void {
     setComment(!comment);
@@ -24,6 +107,56 @@ function Post({ post }: any) {
 
   function handleComment(comment: ICommentResponse): void {
     setComments([...comments, comment]);
+  }
+
+  async function handleEmoji(emoji_type: string) {
+    if(!isLiked) { // add emoji
+      const originEmojiData = {
+        _id: post._id,
+        emoji_user: user,
+        emoji_type: emoji_type
+      }
+      const responseEmoji = await postApi.addingPostEmoji(addingPostEmojiUrl, originEmojiData);
+      const { status, data } = responseEmoji;
+  
+      if(status === 200 && data.emoji) {
+        setEmojis([...emojis, data.emoji]);
+        setIsLiked(true);
+      }
+    } else {
+      const emojiUser = emojis.find((emoji: IEmoji) => emoji.emoji_user._id === user._id);
+
+      if(emojiUser && emojiUser.emoji_type !== emoji_type) { // update emoji_type
+        const originEmojiData = {
+          _id: post._id, 
+          emoji_id: emojiUser._id,
+          emoji_type: emoji_type
+        }
+
+        const responseEmoji = await postApi.updatePostEmoji(updatePostEmojiUrl, originEmojiData);
+        const { status, data } = responseEmoji;
+
+        if(status === 200 && data.message === 'updated') {
+          emojiUser.emoji_type = emoji_type;
+
+          setEmojis([...emojis]);
+        }
+      } else { // remove emoji
+        const originEmojiData = {
+          _id: post._id, 
+          user_id: user._id
+        }
+        const responseEmoji = await postApi.removePostEmoji(removePostEmojiUrl, originEmojiData);
+        const { status, data } = responseEmoji;
+    
+        if(status === 200 && data.message === 'updated') {
+          const emojiTemp = emojis.filter((emoji: IEmoji) => emoji.emoji_user._id !== user._id);
+          
+          setEmojis(emojiTemp);
+          setIsLiked(false);
+        }
+      }
+    }
   }
 
   function getFullName(first_name: string = '', last_name: string = ''): string { 
@@ -73,10 +206,21 @@ function Post({ post }: any) {
         </div>
         <div className="post-emotion-container">
           <div className="post-emotion">
-          { 
-            isEmoji(post.post_emojis) && 
-            <span className="post-emotion-number">{ getTotalEmoji(post.post_emojis) }</span> 
-          }
+            <div className="post-emoji-container">
+            {
+              mappingEmojis(emojis).map((emoji: IEmojiAfterMapping) => {
+                return (
+                  <span key={emoji.emoji_type} className="emoji-item">
+                    <img src={getEmojiUrl(emoji.emoji_type)} alt={emoji.emoji_type} />
+                  </span>
+                )
+              })
+            }
+            </div>
+            { 
+              isEmoji(emojis) && 
+              <span className="post-emotion-number">{ getTotalEmoji(emojis) }</span> 
+            }
           </div>
           {
             isComment(comments) &&
@@ -85,8 +229,21 @@ function Post({ post }: any) {
         </div>
         <div className="post-comments">
           <div className="post-actions">
-            <div className="action">Thích</div>
-            <div className="action" onClick={handleCertainChangeComment}>Bình luận</div>
+            <div className={`action-item ${isLiked ? "liked" : ""}`}>
+              <span onClick={() => handleEmoji(emojiKey.like)}>Thích</span>
+              <div className="emojis-container">
+              {
+                iconsEmoji.map(emoji => {
+                  return ( 
+                    <span key={emoji.id} className="emoji-item" onClick={() => handleEmoji(emoji.id)}>
+                      <img src={emoji.iconUrl} alt={emoji.id} />
+                    </span>
+                  )
+                })
+              }
+              </div>
+            </div>
+            <div className="action-item" onClick={handleCertainChangeComment}>Bình luận</div>
           </div>
           {
             comment
