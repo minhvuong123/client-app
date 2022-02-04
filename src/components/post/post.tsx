@@ -167,8 +167,20 @@ function Post({ post }: any) {
     return comments.length > 0;
   }
 
+  function calculateTotalComment(totalResult: { total: number }, comments: ICommentResponse[]) {
+    comments.forEach(comment => {
+      totalResult.total = totalResult.total + 1;
+      if(comment.comments.length > 0) {
+        calculateTotalComment(totalResult, comment.comments)
+      }
+    })
+  }
+
   function getTotalComment(comments: ICommentResponse[]) {
-    return comments.length;
+    const totalResult = { total: 0 };
+    calculateTotalComment(totalResult, comments);
+ 
+    return totalResult.total;
   }
 
   function isEmoji(emojis: IEmoji[]) {

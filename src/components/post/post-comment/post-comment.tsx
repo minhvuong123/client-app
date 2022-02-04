@@ -227,7 +227,7 @@ function PostComment({ comment, isFinal, isNotFinal }: any) {
                 { htmlParse(comment.comment_text) }
               </div>
               {
-                isEmoji(comment.comment_emojis) &&
+                isEmoji(emojis) &&
                 <div className="comment-emotion-container">
                   <div className="comment-emotion">
                     <div className="emoji-container">
@@ -241,7 +241,7 @@ function PostComment({ comment, isFinal, isNotFinal }: any) {
                           })
                       }
                     </div>
-                    <span className="emoji-total">{ getTotalEmoji(comment.comment_emojis) }</span>
+                    <span className="emoji-total">{ getTotalEmoji(emojis) }</span>
                     { 
                       emojis.length > 0 &&  
                       <div className="emoji-preview">
@@ -253,7 +253,7 @@ function PostComment({ comment, isFinal, isNotFinal }: any) {
               } 
             </div>
             <div className="comment-extension">
-              <a href="/" className="extension-item item-like">
+              <a href="/" className="extension-item item-like" onClick={(event) => handleEmoji(event, "like")}>
                 Thích
                 <div className="emojis-container">
                 {
