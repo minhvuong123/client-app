@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import './create-post.scss';
 
-function CreatePost() {
+function CreatePost({ onPost }: any) {
   const [openModal, setOpenModal] = useState(false);
 
   function handleModal() {
@@ -20,7 +20,7 @@ function CreatePost() {
         <span className="post-icon"></span>
         <span className="post-create" onClick={handleModal}>Nguyễn ơi, bạn đang nghĩ gì thế?</span>
       </div>
-      <PopupCreatePost open={openModal} onChange={onChangeModal} />
+      <PopupCreatePost open={openModal} onPost={onPost} onChange={onChangeModal} />
     </div>
   );
 }

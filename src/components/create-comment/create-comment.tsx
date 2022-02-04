@@ -1,9 +1,9 @@
-
 import { addingCommentUrl, commentApi } from 'api';
 import { addingPostCommentUrl, postApi } from 'api/post.api';
 import { ICommentRequest, IFile } from 'model';
 import { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { nanoid } from 'nanoid';
 import { SelectorAccessUser } from 'redux/reducers/authentication.reducer';
 
 import './create-comment.scss';
@@ -21,6 +21,16 @@ function CreateComment({ postId, commentId, onComment }: any) {
         _id: '',
         comment_user: user,
         comment_text: event.target.innerHTML,
+      }
+
+      if(filesList.length > 0) {
+        let imageText = '';
+
+        filesList.forEach(file => {
+          imageText = imageText + `<span className="image-item"><img src="${file.file_data}" alt="${file.file_name}" /></span>`
+        })
+
+        originCommentData.comment_text = originCommentData.comment_text + `<div className="image-list">${imageText}</div>`;
       }
 
       if(postId) {
@@ -42,6 +52,8 @@ function CreateComment({ postId, commentId, onComment }: any) {
           event.target.innerHTML = '';
         }
       }
+
+      setFilesList([]);
     }
   }
 
@@ -51,7 +63,7 @@ function CreateComment({ postId, commentId, onComment }: any) {
     }
   }
 
-  async function onUploadImageChange(event: any): Promise<void> {
+  async function uploadImageChange(event: any): Promise<void> {
     editorRef.current.focus();
     const files = event.target.files;
     const filesStore: IFile[] = []; 
@@ -59,6 +71,7 @@ function CreateComment({ postId, commentId, onComment }: any) {
     for (const file of files) {
       const base64Url = await getBase64(file) as any;
       const storeFile: IFile = {
+        file_id: nanoid(10),
         file_name: file.name,
         file_size: file.size,
         file_type: file.type,
@@ -68,7 +81,7 @@ function CreateComment({ postId, commentId, onComment }: any) {
       filesStore.push(storeFile);
     }
 
-    setFilesList(filesStore);
+    setFilesList([...filesList, ...filesStore]);
 
     // reset value to continue upload to the same image
     event.target.value = '';
@@ -83,6 +96,12 @@ function CreateComment({ postId, commentId, onComment }: any) {
     });
   }
 
+  function handleRemoveFile(fileId: string) {
+    const files = filesList.filter(file => file.file_id !== fileId);
+
+    setFilesList(files);
+  }
+
   return (
     <div className="create-comment-container">
       <div className="create-comment">
@@ -90,36 +109,44 @@ function CreateComment({ postId, commentId, onComment }: any) {
           <span className="online"></span>
         </div>
         <div className="comment-create">
-          <div className="comment-files-container">
-            <div className="comment-files">
-              {/* {
-                filesList.map(file => {
-                  return (
-                    <span key={} className="file-item">
-                    <img src={} />
-                  </span>
-                  )
-                })
-              } */}
+          {
+            filesList.length > 0 
+            &&
+            <div className="comment-files-container">
+              <div className="comment-files">
+                {
+                  filesList.map(file => {
+                    return (
+                    <div key={file.file_id} className="file-item">
+                      <span className="file-close" onClick={() => handleRemoveFile(file.file_id)}>X</span>
+                      <img src={file.file_data} alt="" />
+                    </div>
+                    )
+                  })
+                } 
+                <div className="file-upload" onClick={openUploadFile}>attach</div>
+              </div>
             </div>
-          </div>
-          <input 
-            className="comment-editor-input" 
-            style={{display: 'none'}} 
-            onChange={onUploadImageChange}
-            type="file" 
-            multiple
-            ref={editorFileRef}
-          />
-          <div 
-            ref={editorRef}
-            contentEditable="true" 
-            placeholder="Viết bình luận..." 
-            className="comment-editable"
-            onKeyDown={handleKeyEnter}
-          ></div>
-          <div className="create-comment-extension">
-            <span className="comment-extension-item" onClick={openUploadFile}>attach</span>
+          }
+          <div className="comment-create-editable">
+            <input 
+              className="comment-editor-input" 
+              style={{display: 'none'}} 
+              onChange={uploadImageChange}
+              type="file" 
+              multiple
+              ref={editorFileRef}
+            />
+            <div 
+              ref={editorRef}
+              contentEditable="true" 
+              placeholder="Viết bình luận..." 
+              className="comment-editable"
+              onKeyDown={handleKeyEnter}
+            ></div>
+            <div className="create-comment-extension">
+              <span className="comment-extension-item" onClick={openUploadFile}>attach</span>
+            </div>
           </div>
         </div>
       </div>

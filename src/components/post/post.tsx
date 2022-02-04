@@ -1,16 +1,16 @@
-import { addingPostEmojiUrl, postApi, removePostEmojiUrl, updatePostEmojiUrl } from 'api';
+import { addingPostEmojiUrl, postApi, removePostEmojiUrl, removePostUrl, updatePostEmojiUrl } from 'api';
 import { emojiKey, iconsEmoji } from 'const';
 import htmlParse from 'html-react-parser';
 import { IEmoji, IEmojiAfterMapping } from 'model';
 import { ICommentResponse } from 'model/comment.model';
-import { memo, useEffect, useState } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { SelectorAccessUser } from 'redux/reducers/authentication.reducer';
 import PostComments from './post-comments/post-comments';
 
 import './post.scss';
 
-function Post({ post }: any) {
+function Post({ post, onRemovePost }: any) {
   const user = useSelector(SelectorAccessUser);
   const [comment, setComment] = useState(false);
   const [comments, setComments] = useState([] as ICommentResponse[]);
@@ -21,6 +21,11 @@ function Post({ post }: any) {
     setComments(post.post_comments)
   }, [post.post_comments])
 
+  const handleLiked = useCallback((emojis: IEmoji[]) => {
+    const emoji = emojis.find(emoji => emoji.emoji_user._id === user._id);
+    return emoji ? true : false
+  }, [user._id])
+
   useEffect(() => {
     if(handleLiked(post.post_emojis)) {
       setIsLiked(true);
@@ -29,13 +34,7 @@ function Post({ post }: any) {
     }
 
     setEmojis(post.post_emojis);
-  }, [post.post_emojis])
-
-  function handleLiked(emojis: IEmoji[]): boolean {
-    const emoji = emojis.find(emoji => emoji.emoji_user._id === user._id);
-
-    return emoji ? true : false
-  }
+  }, [post.post_emojis, handleLiked])
 
   function mappingEmojis(emojis: IEmoji[]): IEmojiAfterMapping[]  {
     const emojiResult = [];
@@ -191,6 +190,16 @@ function Post({ post }: any) {
     return emojis.length;
   }
 
+  async function handleRemovePost(postId: string) {
+    const originPostData = { _id: postId }
+    const responsePost = await postApi.removePost(removePostUrl, originPostData)
+    const { status, data } = responsePost;
+
+    if(status === 200 && data.status === 'removed') {
+      onRemovePost(postId)
+    }
+  }
+
   return (
     <div className="post-container">
       <div className="post">
@@ -202,7 +211,7 @@ function Post({ post }: any) {
               <span className="text-time">1 giờ</span>
             </div>
           </div>
-          <div className="post-close">X</div>
+          <div className="post-close" onClick={() => handleRemovePost(post._id)}>X</div>
         </div>
         <div className="post-content">
           { 

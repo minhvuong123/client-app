@@ -15,7 +15,7 @@ import './profile.scss';
 function Profile({ isShowNavBar }: any) {
   const userOwn = useSelector(SelectorAccessUser);
   const [userDisplay, setUserDisplay] = useState({} as UserResponse);
-  const location = useLocation();
+  const location = useLocation() as any;
   const navigate = useNavigate();
 
   useEffect(() => {

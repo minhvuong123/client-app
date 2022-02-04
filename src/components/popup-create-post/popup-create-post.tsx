@@ -7,7 +7,7 @@ import { IGlobalState } from 'model/globalState.model';
 import './popup-create-post.scss';
 
 
-function PopupCreatePost({ open, onChange }: any) {
+function PopupCreatePost({ open, onPost, onChange }: any) {
   const [globalContext,] = useGlobalContext() as [IGlobalState, any];
 
   function handeCloseModal() {
@@ -19,7 +19,7 @@ function PopupCreatePost({ open, onChange }: any) {
       <div className="popup-blur" onClick={handeCloseModal}></div>
       <div className="popup-create-post">
         {
-          globalContext?.typingPopup ? <PopupTyping onChange={onChange} /> : <PopupShared />
+          globalContext?.typingPopup ? <PopupTyping onPost={onPost} onChange={onChange} /> : <PopupShared />
         }
       </div>
     </div>,

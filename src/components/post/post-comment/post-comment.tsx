@@ -2,7 +2,7 @@
 import CreateComment from 'components/create-comment/create-comment';
 import { ICommentResponse, IEmoji, IEmojiAfterMapping, UserResponse } from 'model';
 import htmlParse from 'html-react-parser';
-import { memo, useEffect, useState } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 import { emojiKey, iconsEmoji } from 'const';
 import { useSelector } from 'react-redux';
 import { SelectorAccessUser } from 'redux/reducers/authentication.reducer';
@@ -22,6 +22,11 @@ function PostComment({ comment, isFinal, isNotFinal }: any) {
     setComments(comment.comments);
   }, [comment])
 
+  const handleLiked = useCallback((emojis: IEmoji[]) => {
+    const emoji = emojis.find(emoji => emoji.emoji_user._id === user._id);
+    return emoji ? true : false
+  }, [user._id])
+
   useEffect(() => {
     if(handleLiked(comment.comment_emojis)) {
       setIsLiked(true);
@@ -30,7 +35,7 @@ function PostComment({ comment, isFinal, isNotFinal }: any) {
     }
 
     setEmojis(comment.comment_emojis);
-  }, [comment.comment_emojis])
+  }, [comment.comment_emojis, handleLiked])
 
   function handleChangeComment(event: any): void {
     event.preventDefault();
@@ -41,12 +46,6 @@ function PostComment({ comment, isFinal, isNotFinal }: any) {
   function handleComment(comment: ICommentResponse) {
     setComments([...comments, comment]);
     setIsNew(true)
-  }
-
-  function handleLiked(emojis: IEmoji[]): boolean {
-    const emoji = emojis.find(emoji => emoji.emoji_user._id === user._id);
-
-    return emoji ? true : false
   }
 
   async function handleEmoji(event: any, emoji_type: string) {
@@ -253,8 +252,8 @@ function PostComment({ comment, isFinal, isNotFinal }: any) {
               } 
             </div>
             <div className="comment-extension">
-              <a href="/" className="extension-item item-like" onClick={(event) => handleEmoji(event, "like")}>
-                Thích
+              <a href="/" className="extension-item item-like">
+                <span className="emoji-like-text" onClick={(event) => handleEmoji(event, 'like')}>Thích</span>
                 <div className="emojis-container">
                 {
                   iconsEmoji.map(emoji => {

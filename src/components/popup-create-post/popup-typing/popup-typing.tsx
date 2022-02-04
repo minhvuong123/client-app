@@ -11,7 +11,7 @@ import { SelectorAccessUser } from 'redux/reducers/authentication.reducer';
 
 import './popup-typing.scss';
 
-function PopupTyping({ onChange }: any) {
+function PopupTyping({ onPost, onChange }: any) {
   const user = useSelector(SelectorAccessUser) as UserResponse;
   const [globalState, dispatch] = useGlobalContext() as [IGlobalState, any];
   const [textEditor, setTextEditor] = useState('');
@@ -42,10 +42,10 @@ function PopupTyping({ onChange }: any) {
     const responsePost = await postApi.addingPost(addingPostUrl, originPost);
     const { status, data } = responsePost;
 
-    if(status === 200 && data.status === 'success') {
+    if(status === 200 && data.status === 'success' && data.post) {
+      onPost(data.post);
       onChange(false);
     }
-    console.log(status, data);
   }
 
   return (

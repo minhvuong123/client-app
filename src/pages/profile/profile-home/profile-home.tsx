@@ -10,7 +10,7 @@ import './profile-home.scss';
 
 function ProfileHome() {
   const [posts, setPosts] = useState([] as IPostResponse[]);
-  const location = useLocation();
+  const location = useLocation() as any;
 
   useEffect(() => {
     async function getPosts() {
@@ -32,6 +32,16 @@ function ProfileHome() {
   function friendRoute(pathName: string): boolean {
     const paths = pathName.split('/');
     return paths[1].includes('friends');
+  }
+
+  function handlePost(post: IPostResponse): void {
+    setPosts([...posts, post]);
+  }
+
+  function hanelRemovePost(postId: string) {
+    const postsTemp = posts.filter(post => post._id !== postId)
+
+    setPosts([...postsTemp]);
   }
 
   return (
@@ -76,11 +86,11 @@ function ProfileHome() {
         </div>
       </div>
       <div className="profile-body-right">
-        { !friendRoute(location.pathname) && <CreatePost /> }
+        { !friendRoute(location.pathname) && <CreatePost onPost={handlePost} /> }
         <div className="post-list">
           {
             posts.map((post: IPostResponse) => {
-              return <Post key={post._id} post={post} />
+              return <Post key={post._id} post={post} onRemovePost={hanelRemovePost} />
             })
           }
         </div>

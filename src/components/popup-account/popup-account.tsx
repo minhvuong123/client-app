@@ -14,7 +14,7 @@ function PopupAccount() {
     if(!isLogin) {
       navigate('/sign-in')
     }
-  }, [isLogin])
+  }, [isLogin, navigate])
   
   function logout(): void {
     dispatch({ type: 'LOGOUT' })

@@ -2,8 +2,9 @@
 import { ICommentRequest, IPostRequest } from "model";
 import { axiosClient } from "./axiosClient.api";
 
-export const addingPostUrl = '/posts/addPost';
-export const getPostsUrl = '/posts/getPosts';
+export const addingPostUrl = '/posts/add-post';
+export const getPostsUrl = '/posts/get-posts';
+export const removePostUrl = '/posts/remove-post';
 export const addingPostCommentUrl = '/posts/comment';
 export const addingPostEmojiUrl = '/posts/emoji';
 export const removePostEmojiUrl = '/posts/remove-emoji';
@@ -15,6 +16,9 @@ export const postApi = {
   },
   gettingPosts: (url: string): Promise<any> => {
     return axiosClient.get(url);
+  },
+  removePost: (url: string, originEmojiData: any): Promise<any> => {
+    return axiosClient.post(url, originEmojiData);
   },
   addingPostComment: (url: string, originCommentData: ICommentRequest): Promise<any> => {
     return axiosClient.post(url, originCommentData);

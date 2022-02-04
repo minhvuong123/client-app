@@ -17,7 +17,7 @@ function SignIn() {
     if(isLogin) {
       navigate('/')
     }
-  }, [isLogin])
+  }, [isLogin, navigate])
 
   const onFinish = async (values: any) => {
     const originLoginData = values;

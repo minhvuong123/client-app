@@ -34,30 +34,67 @@
       width: 100%;
       margin-left: 0.5rem;
       cursor: pointer;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      .comment-editable {
-        display: inline-block;
-        flex-grow: 1;
-        cursor: text;
-        word-break: break-word;
-        font-size: 1.4rem;
-        &[placeholder]:empty:before {
-          content: attr(placeholder);
-          color: #555; 
-        }
-        &:focus-visible {
-          border: unset;
-          outline: unset;
-          box-shadow: unset;
+      .comment-files-container {
+        margin: .5rem 0 1rem 0;
+        .comment-files {
+          display: flex;
+          flex-direction: row;
+          .file-item {
+            width: 48px;
+            height: 48px;
+            border-radius: 1rem;
+            position: relative;
+            margin-right: 1rem;
+            .file-close {
+              position: absolute;
+              right: -5px;
+              top: -5px;
+              line-height: 1;
+              z-index: 1;
+            }
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              border-radius: 1rem;
+            }
+          }
+          .file-upload {
+            width: 48px;
+            height: 48px;
+            border-radius: 1rem;
+            position: relative;
+            margin-right: 1rem;
+            background-color: #fff;
+          }
         }
       }
-    }
-    .create-comment-extension {
-      align-self: flex-end;
-      .comment-extension-item {
-        margin-left: .7rem;
+      .comment-create-editable {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        .comment-editable {
+          display: inline-block;
+          flex-grow: 1;
+          cursor: text;
+          word-break: break-word;
+          font-size: 1.4rem;
+          &[placeholder]:empty:before {
+            content: attr(placeholder);
+            color: #555; 
+          }
+          &:focus-visible {
+            border: unset;
+            outline: unset;
+            box-shadow: unset;
+          }
+        }
+        .create-comment-extension {
+          align-self: flex-end;
+          .comment-extension-item {
+            margin-left: .7rem;
+          }
+        }
       }
     }
   }
