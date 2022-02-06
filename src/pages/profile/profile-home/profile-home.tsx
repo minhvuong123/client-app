@@ -6,6 +6,9 @@ import Post from 'components/post/post';
 import { IPostResponse } from 'model';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
+import ProfileFriends from '../profile-friends/profile-friends';
+import ProfilePhotos from '../profile-photos/profile-photos';
+
 import './profile-home.scss';
 
 function ProfileHome() {
@@ -47,43 +50,8 @@ function ProfileHome() {
   return (
     <>
       <div className="profile-body-left">
-        <div className="profile-images-conatiner">
-          <div className="images-header">Ảnh</div>
-        </div>
-        <div className="profile-friends-conatiner">
-          <div className="friends-header">Bạn bè</div>
-          <div className="friends-amount">45 người bạn</div>
-          <div className="friends-list">
-            <div className="friends-item">
-              <span className="item-image"></span>
-              <span className="item-name">Name</span>
-            </div>
-            <div className="friends-item">
-              <span className="item-image"></span>
-              <span className="item-name">Name</span>
-            </div>
-            <div className="friends-item">
-              <span className="item-image"></span>
-              <span className="item-name">Name</span>
-            </div>
-            <div className="friends-item">
-              <span className="item-image"></span>
-              <span className="item-name">Name</span>
-            </div>
-            <div className="friends-item">
-              <span className="item-image"></span>
-              <span className="item-name">Name</span>
-            </div>
-            <div className="friends-item">
-              <span className="item-image"></span>
-              <span className="item-name">Name</span>
-            </div>
-            <div className="friends-item friends-item-fix"></div>
-            <div className="friends-item friends-item-fix"></div>
-            <div className="friends-item friends-item-fix"></div>
-            <div className="friends-item friends-item-fix"></div>
-          </div>
-        </div>
+        <ProfilePhotos />
+        <ProfileFriends itemTotal={3} />
       </div>
       <div className="profile-body-right">
         { !friendRoute(location.pathname) && <CreatePost onPost={handlePost} /> }

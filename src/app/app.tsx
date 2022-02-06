@@ -31,9 +31,13 @@ function App() {
             } else {
               navigate('/');
             }
-          }).catch(() => navigate('/sign-in'))
+          }).catch(() => {
+            navigate('/sign-in')
+          })
         }
-      }).catch(() => navigate('/sign-in'))
+      }).catch(() => {
+        navigate('/sign-in')
+      })
     } else {
       navigate('/sign-in');
     }

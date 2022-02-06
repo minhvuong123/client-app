@@ -4,15 +4,12 @@ import { getPostsUrl, postApi } from 'api';
 import CreatePost from 'components/create-post/create-post';
 import { IPostResponse } from 'model';
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import Post from 'components/post/post';
 
 import './home-middle.scss';
 
 function HomeMiddle() {
   const [posts, setPosts] = useState([] as IPostResponse[]);
-  const location = useLocation() as any;
-  console.log("location: ", location)
 
   useEffect(() => {
     async function getPosts() {

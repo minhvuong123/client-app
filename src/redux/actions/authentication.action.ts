@@ -4,6 +4,7 @@ export const LOGIN = {
   LOGIN: 'LOGIN',
   SUCCESS: 'LOGIN_SUCCESS',
   FAULT: 'LOGIN_FAULT',
+  UPDATE_AVATAR_USER: 'UPDATE_AVATAR_USER',
 };
 
 export function loginSuccess(token: string, refreshToken: string,  user: UserResponse) {
@@ -18,6 +19,13 @@ export function loginSuccess(token: string, refreshToken: string,  user: UserRes
 export function loginFault() {
   return {
     type: LOGIN.FAULT
+  }
+} 
+
+export function updateAvatarUrl(imageUrl: string) {
+  return {
+    type: LOGIN.UPDATE_AVATAR_USER,
+    imageUrl
   }
 } 
 

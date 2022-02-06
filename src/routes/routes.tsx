@@ -68,7 +68,7 @@ const RoutesPath = [
       },
       { 
         path: ':id/friends',
-        element: <ProfileFriends />
+        element: <ProfileFriends itemTotal={5} />
       },
       { 
         path: ':id/photos',
@@ -97,7 +97,7 @@ const RoutesPath = [
       },
       { 
         path: 'friends',
-        element: <ProfileFriends />
+        element: <ProfileFriends itemTotal={8} />
       },
       { 
         path: 'photos',

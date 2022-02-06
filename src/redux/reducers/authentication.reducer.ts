@@ -1,17 +1,17 @@
+import { UserResponse } from "model";
 import { LOGIN, LOGOUT } from "redux/actions/authentication.action";
 
 const authentication = {
   isLogin: false,
   access_token: '',
   refreshToken: '',
-  user: {}
+  user: {} as UserResponse
 }
 
 // selector
 export const SelectorIsLogin = (state: any) => state.authentication.isLogin; 
 export const SelectorAccessToken = (state: any) => state.authentication.access_token; 
 export const SelectorAccessUser = (state: any) => state.authentication.user; 
-export const SelectorAccessUserPreview = (state: any) => state.authentication.userPreview; 
 
 // reducers
 export default function authenticationReducer(state = authentication, action: any) {
@@ -32,8 +32,12 @@ export default function authenticationReducer(state = authentication, action: an
     case LOGOUT: 
       state.access_token = '';
       state.refreshToken = '';
-      state.user = {};
+      state.user = {} as UserResponse;
       state.isLogin = false;
+      return {...state}
+    case LOGIN.UPDATE_AVATAR_USER: 
+      state.user.avatar = action.imageUrl;
+      localStorage.setItem("user", JSON.stringify(state.user));
       return {...state}
     default:
       return state;

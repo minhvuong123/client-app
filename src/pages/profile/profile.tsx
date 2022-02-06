@@ -2,30 +2,45 @@
 
 
 import NavBar from 'navbar/nav-bar';
-import { useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { SelectorAccessUser } from 'redux/reducers/authentication.reducer';
 import { useLocation } from "react-router-dom";
 import { Outlet } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { UserResponse } from 'model';
+import { AiFillCamera } from "react-icons/ai";
+import PopupUploadAvatar from 'components/popup-upload-avatar/popup-upload-avatar';
+import { serverUrl } from 'api';
 
 import './profile.scss';
+import { useSelector } from 'react-redux';
+import { SelectorAccessUser } from 'redux/reducers/authentication.reducer';
 
 function Profile({ isShowNavBar }: any) {
   const userOwn = useSelector(SelectorAccessUser);
   const [userDisplay, setUserDisplay] = useState({} as UserResponse);
+  const [openModal, setOpenModal] = useState(false);
   const location = useLocation() as any;
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(location.state && location.state.user) {
-      setUserDisplay(location.state.user);
+    if(friendRoute(location.pathname)) {
+      if(location.state && location.state.user) {
+        setUserDisplay(location.state.user);
+      } else {
+        navigate('/404')
+      }
     } else {
-      navigate('/404')
+      setUserDisplay(userOwn);
     }
-    
   }, [location, userOwn, navigate])
+
+  function handleModal() {
+    setOpenModal(true)
+  }
+
+  function onChangeModal(value: boolean) {
+    setOpenModal(value)
+  }
 
   function getFullName(first_name: string = '', last_name: string = ''): string { 
     return `${first_name} ${last_name}`;
@@ -56,11 +71,14 @@ function Profile({ isShowNavBar }: any) {
                   <div className="avatar" style={{backgroundColor: userDisplay.background_color}}>
                     {
                       userDisplay.avatar 
-                      ? <img src={userDisplay.avatar} alt="" />
+                      ? <img src={serverUrl + userDisplay.avatar} alt="" />
                       : <span className="avatar-character">{getFirstCharacter(userDisplay.first_name)}</span>
                     }
                   </div>
-                  <div className="avatar-upload-button"></div>
+                  <div className="avatar-upload-button" onClick={handleModal}>
+                    <AiFillCamera />
+                  </div>
+                  { openModal && <PopupUploadAvatar open={openModal} onChange={onChangeModal} /> }
                 </div>
               </div>
             </div>
