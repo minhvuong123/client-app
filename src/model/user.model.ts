@@ -43,3 +43,9 @@ export interface ILoginSuccess {
   refreshToken: string;
   user: UserResponse;
 }
+
+export interface IImage {
+  _id: string;
+  images_user_id: string;
+  images_url: string;
+}

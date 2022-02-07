@@ -217,13 +217,6 @@ function Post({ post, onRemovePost }: any) {
           { 
             htmlParse(post.post_text)
           }
-          {/* <div>Bán em này!</div>
-          <div>4tr2, có thể thương lượng với những ai có thiện chí!</div>
-          <div>Có giấy tờ!</div>
-          <div>🥰🥰🥰🥰🥰🥰🥰🥰</div>
-          <div className="post-images">
-            <img src={banXe} alt="" />
-          </div> */}
         </div>
         <div className="post-emotion-container">
           <div className="post-emotion">

@@ -1,0 +1,25 @@
+.profile-images-conatiner {
+  border-radius: 1rem;
+  background-color: #fff;
+  box-shadow: 0 1px 2px #00000033;
+  padding: 1rem;
+  width: 100%;
+  .images-header {
+    font-size: 2.5rem;
+    font-weight: bold;
+    padding: 0 1rem;
+  }
+  .images-content {
+    border-radius: .5rem;
+    overflow: hidden;
+    .images-item {
+      display: inline-block;
+      width: 100px;
+      height: 100px;
+      img {
+        width: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+}

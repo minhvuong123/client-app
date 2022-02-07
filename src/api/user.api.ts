@@ -9,6 +9,7 @@ export const addFriendUrl = '/users/addFriend';
 export const refreshUrl = '/users/refresh';
 export const uploadAvatarUrl = '/users/upload-avatar';
 export const getFriendsUrl = '/users/get-friends';
+export const getImagesUrl = '/users/get-images';
 
 export const userApi = {
   register: (url: string, originRegisterData: RegisterUserRequest): Promise<any> => {
@@ -33,6 +34,9 @@ export const userApi = {
     return axiosClient.patch(url, originRefreshData);
   },
   getFriends: (url: string, originFriendsData: any): Promise<any> => {
+    return axiosClient.post(url, originFriendsData);
+  },
+  getImages: (url: string, originFriendsData: any): Promise<any> => {
     return axiosClient.post(url, originFriendsData);
   }
 }
