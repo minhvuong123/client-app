@@ -8,7 +8,7 @@ import { useLocation } from 'react-router-dom';
 import { SelectorAccessUser } from 'redux/reducers/authentication.reducer';
 import './profile-photos.scss';
 
-function ProfilePhotos() {
+function ProfilePhotos({ itemTotal, classContainer }: any) {
   const userOwn = useSelector(SelectorAccessUser);
   const location = useLocation() as any;
   const [images, setImages] = useState([] as IImage[]);
@@ -47,10 +47,22 @@ function ProfilePhotos() {
     const paths = pathName.split('/');
     return paths[1].includes('friends');
   }
+
+  
+  function getEmptyItem(itemTotal: number) {
+    const emptyItems = [];
+    
+    for (let index = 0; index < itemTotal; index++) {
+      emptyItems.push({ id: index });
+    }
+
+    return emptyItems;
+  }
+
   return (
     <div className="profile-images-conatiner">
       <div className="images-header">Ảnh</div>
-      <div className="images-content">
+      <div className={`images-content ${classContainer}`}>
         {
           images.length > 0
           &&
@@ -61,6 +73,9 @@ function ProfilePhotos() {
               </span>
             )
           }) 
+        }
+        {
+          getEmptyItem(itemTotal).map(item => <div key={item.id} className="images-item images-item-fix"></div>)
         }
       </div>
     </div>

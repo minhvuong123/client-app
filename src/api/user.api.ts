@@ -8,6 +8,7 @@ export const validateUrl = '/validate';
 export const addFriendUrl = '/users/addFriend';
 export const refreshUrl = '/users/refresh';
 export const uploadAvatarUrl = '/users/upload-avatar';
+export const uploadBackgroundUrl = '/users/upload-background';
 export const getFriendsUrl = '/users/get-friends';
 export const getImagesUrl = '/users/get-images';
 
@@ -31,6 +32,9 @@ export const userApi = {
     return axiosClient.post(url, originRefreshData);
   },
   uploadAvatar: (url: string, originRefreshData: any): Promise<any> => {
+    return axiosClient.patch(url, originRefreshData);
+  },
+  uploadBackground: (url: string, originRefreshData: any): Promise<any> => {
     return axiosClient.patch(url, originRefreshData);
   },
   getFriends: (url: string, originFriendsData: any): Promise<any> => {

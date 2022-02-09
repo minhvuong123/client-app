@@ -7,6 +7,7 @@ export interface IPostRequest {
   post_text: string;
   post_emoji?: any
   post_comments?: any
+  post_images?: any
 }
 
 export interface IPostResponse {

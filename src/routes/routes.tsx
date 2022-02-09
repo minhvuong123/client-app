@@ -68,11 +68,11 @@ const RoutesPath = [
       },
       { 
         path: ':id/friends',
-        element: <ProfileFriends itemTotal={5} />
+        element: <ProfileFriends itemTotal={5} classContainer="friends-route" />
       },
       { 
         path: ':id/photos',
-        element: <ProfilePhotos />
+        element: <ProfilePhotos itemTotal={5} classContainer="photos-route" />
       },
     ]
   },
@@ -97,11 +97,11 @@ const RoutesPath = [
       },
       { 
         path: 'friends',
-        element: <ProfileFriends itemTotal={8} />
+        element: <ProfileFriends itemTotal={8} classContainer="friends-route" />
       },
       { 
         path: 'photos',
-        element: <ProfilePhotos />
+        element: <ProfilePhotos itemTotal={8} classContainer="photos-route" />
       },
     ]
   },

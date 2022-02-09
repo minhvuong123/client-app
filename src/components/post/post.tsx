@@ -1,7 +1,7 @@
-import { addingPostEmojiUrl, postApi, removePostEmojiUrl, removePostUrl, updatePostEmojiUrl } from 'api';
+import { addingPostEmojiUrl, postApi, removePostEmojiUrl, removePostUrl, serverUrl, updatePostEmojiUrl } from 'api';
 import { emojiKey, iconsEmoji } from 'const';
 import htmlParse from 'html-react-parser';
-import { IEmoji, IEmojiAfterMapping } from 'model';
+import { IEmoji, IEmojiAfterMapping, IImage } from 'model';
 import { ICommentResponse } from 'model/comment.model';
 import { memo, useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -200,6 +200,22 @@ function Post({ post, onRemovePost }: any) {
     }
   }
 
+  function getClassNameImageItem(fileLength: number, index: number) {
+    if (fileLength <= 2) {
+      return 'w-100';
+    } else if (fileLength === 3) {
+      if(index === 0) return 'w-100';
+      return 'w-50'
+    } else {
+      if(index === 0) return 'w-100';
+      if(index === 1 || index === 2 || index === 3 ) return 'w-33'
+    }
+  }
+
+  function handleChooseImage(image: IImage) {
+    console.log("image: ", image);
+  }
+
   return (
     <div className="post-container">
       <div className="post">
@@ -214,8 +230,38 @@ function Post({ post, onRemovePost }: any) {
           <div className="post-close" onClick={() => handleRemovePost(post._id)}>X</div>
         </div>
         <div className="post-content">
-          { 
-            htmlParse(post.post_text)
+          { htmlParse(post.post_text) }
+          {
+            post.post_images.length > 0
+            && 
+            <div className="images-list flex-row">
+              {
+                post.post_images.map((image: IImage, index: number) => {
+                  if(index <= 2) {
+                    return  (
+                      <div 
+                        key={image._id} 
+                        className={`image-item ${getClassNameImageItem(post.post_images.length, index)}`}
+                        onClick={() => handleChooseImage(image)}
+                      >
+                        <img src={serverUrl + image.images_url} alt={image._id} />
+                      </div>
+                    ) 
+                  } else if(index === 3) {
+                    return (
+                      <div key={image._id} className={`image-item ${getClassNameImageItem(post.post_images.length, index)}`}>
+                        <img src={serverUrl + image.images_url} alt={image._id} />
+                        {
+                          post.post_images.length > 4 
+                          && 
+                          <span className="image-item-total">+{ post.post_images.length - 4 }</span>
+                        }
+                      </div>
+                    )
+                  }
+                })
+              }
+            </div>
           }
         </div>
         <div className="post-emotion-container">

@@ -5,20 +5,24 @@ import NavBar from 'navbar/nav-bar';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useLocation } from "react-router-dom";
 import { Outlet } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { UserResponse } from 'model';
+import { useEffect, useRef, useState } from 'react';
+import { IFile, UserResponse } from 'model';
 import { AiFillCamera } from "react-icons/ai";
 import PopupUploadAvatar from 'components/popup-upload-avatar/popup-upload-avatar';
-import { serverUrl } from 'api';
+import { serverUrl, uploadBackgroundUrl, userApi } from 'api';
 
 import './profile.scss';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { SelectorAccessUser } from 'redux/reducers/authentication.reducer';
+import { nanoid } from 'nanoid';
+import { updateBackgroundUrl } from 'redux/actions/authentication.action';
 
 function Profile({ isShowNavBar }: any) {
   const userOwn = useSelector(SelectorAccessUser);
   const [userDisplay, setUserDisplay] = useState({} as UserResponse);
   const [openModal, setOpenModal] = useState(false);
+  const dispatch = useDispatch();
+  const editorFileRef = useRef() as any;
   const location = useLocation() as any;
   const navigate = useNavigate();
 
@@ -55,6 +59,45 @@ function Profile({ isShowNavBar }: any) {
     return paths[1].includes('friends');
   }
 
+  function openUploadFile(): void {
+    if (editorFileRef?.current) {
+      editorFileRef?.current.click();
+    }
+  }
+  function getBase64(file: any) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+  }
+  
+  async function uploadImageChange(event: any): Promise<void> {
+    const fileUpload = event.target.files[0];
+
+    const base64Url = await getBase64(fileUpload) as any;
+    const storeFile: IFile = {
+      file_id: nanoid(10),
+      file_name: fileUpload.name,
+      file_size: fileUpload.size,
+      file_type: fileUpload.type,
+      file_data: base64Url
+    };
+
+    const fileOriginData = {...storeFile, _id: userDisplay._id};
+
+    const responseUser = await userApi.uploadBackground(uploadBackgroundUrl, { ...fileOriginData });
+    const { status, data } = responseUser;
+
+    if(status === 200 && data.status === "updated" && data.imageUrl) {
+      dispatch(updateBackgroundUrl(data.imageUrl));
+    }
+
+    // reset value to continue upload to the same image
+    event.target.value = '';
+  }
+
   return userDisplay ? (
     <>
       { isShowNavBar && <NavBar /> }
@@ -63,9 +106,24 @@ function Profile({ isShowNavBar }: any) {
           <div className="profile-header">
             <div className="profile-images">
               <div className="images-conatiner">
-                <img src="" alt="" />
+                {
+                  userDisplay.background_image
+                  && 
+                  <img src={serverUrl + userDisplay.background_image} alt="" />
+                }
+                
               </div>
-              <div className="images-upload-button">Thêm ảnh bìa</div>
+              <div className="images-upload-button">
+                <input 
+                  className="comment-editor-input" 
+                  style={{display: 'none'}} 
+                  onChange={uploadImageChange}
+                  type="file" 
+                  multiple
+                  ref={editorFileRef}
+                />
+                <span className="control-item" onClick={openUploadFile}>Thêm ảnh bìa</span>
+              </div>
               <div className="images-avatar">
                 <div className="avatar-container">
                   <div className="avatar" style={{backgroundColor: userDisplay.background_color}}>

@@ -37,55 +37,17 @@ function PopupTyping({ onPost, onChange }: any) {
     return sharedMapping[key]
   }
 
-  function getImageItemTotal(fileLength: number) {
-    return fileLength > 4 ? `<span className="image-item-total">+${ fileLength - 4 }</span>` : '';
-  }
-
-  function handleImageClick() {
-    console.log("asoiduads");
-  }
-
   async function handlePost() {
     const originPost: IPostRequest = {
       post_user: user,
       post_shared: globalState.shared,
-      post_text: textEditor
+      post_text: textEditor,
+      post_images: []
     }
 
     if(filesList.length > 0) {
-      let imageText = '';
-      imageText = imageText + '{image}';
-      // filesList.forEach((file, index: number) => {
-      //   if(index <= 2) {
-      //     imageText = imageText + `<div className="image-item ${getClassNameImageItem(filesList.length, index)}" onClick="${handleImageClick}"><img src="${file.file_data}" alt="${file.file_name}" /></div>`
-      //   } else if (index === 3) {
-      //     imageText = imageText + `<div className="image-item ${getClassNameImageItem(filesList.length, index)}"><img src="${file.file_data}" alt="${file.file_name}" />${getImageItemTotal(filesList.length)}</div>`
-      //   }
-      // })
-
-      originPost.post_text = originPost.post_text + `<div className="image-list flex-row">${imageText}</div>`;
+      originPost.post_images = filesList;
     }
-
-    filesList.map((file: IFile, index: number) => {
-      if(index <= 2) {
-        return  (
-          <div key={file.file_id} className={`image-item ${getClassNameImageItem(filesList.length, index)}`}>
-            <img src={file.file_data} alt={file.file_name} />
-          </div>
-        ) 
-      } else if(index === 3) {
-        return (
-          <div key={file.file_id} className={`image-item ${getClassNameImageItem(filesList.length, index)}`}>
-            <img src={file.file_data} alt={file.file_name} />
-            {
-              filesList.length > 4 
-              && 
-              <span className="image-item-total">+{ filesList.length - 4 }</span>
-            }
-          </div>
-        )
-      }
-    })
 
     const responsePost = await postApi.addingPost(addingPostUrl, originPost);
     const { status, data } = responsePost;

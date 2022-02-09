@@ -7,7 +7,7 @@ import { SelectorAccessUser } from 'redux/reducers/authentication.reducer';
 
 import './profile-friends.scss';
 
-function ProfileFriends({ itemTotal }: any) {
+function ProfileFriends({ itemTotal, classContainer }: any) {
   const userOwn = useSelector(SelectorAccessUser);
   const location = useLocation() as any;
   const [friends, setFriends] = useState([] as UserResponse[]);
@@ -64,7 +64,7 @@ function ProfileFriends({ itemTotal }: any) {
   return (
     <div className="profile-friends-conatiner">
       <div className="friends-header">Bạn bè</div>
-      <div className="friends-list">
+      <div className={`friends-list ${classContainer}`}>
         {
           friends.map((friend: UserResponse) => {
             return (

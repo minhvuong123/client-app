@@ -48,4 +48,5 @@ export interface IImage {
   _id: string;
   images_user_id: string;
   images_url: string;
+  createdAt: string;
 }

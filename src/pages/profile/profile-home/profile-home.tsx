@@ -50,16 +50,18 @@ function ProfileHome() {
   return (
     <>
       <div className="profile-body-left">
-        <ProfilePhotos />
-        <ProfileFriends itemTotal={3} />
+        <ProfilePhotos itemTotal={3} classContainer="profile-route" />
+        <ProfileFriends itemTotal={3} classContainer="profile-route" />
       </div>
       <div className="profile-body-right">
         { !friendRoute(location.pathname) && <CreatePost onPost={handlePost} /> }
         <div className="post-list">
           {
-            posts.map((post: IPostResponse) => {
+            posts.length > 0
+            ? posts.map((post: IPostResponse) => {
               return <Post key={post._id} post={post} onRemovePost={hanelRemovePost} />
             })
+            : <div className="post-empty">Không có bài đăng</div>
           }
         </div>
       </div>

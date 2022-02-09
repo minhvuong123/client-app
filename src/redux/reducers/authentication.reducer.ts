@@ -39,6 +39,10 @@ export default function authenticationReducer(state = authentication, action: an
       state.user.avatar = action.imageUrl;
       localStorage.setItem("user", JSON.stringify(state.user));
       return {...state}
+    case LOGIN.UPDATE_BACKGROUND_USER: 
+      state.user.background_image = action.imageUrl;
+      localStorage.setItem("user", JSON.stringify(state.user));
+      return {...state, user: {...state.user}}
     default:
       return state;
   }
