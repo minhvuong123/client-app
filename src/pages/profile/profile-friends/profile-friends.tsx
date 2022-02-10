@@ -37,7 +37,7 @@ function ProfileFriends({ itemTotal, classContainer }: any) {
       }
     }
 
-    if(userDisplay._id && userDisplay._id) {
+    if(userDisplay && userDisplay._id) {
       getFriendsData();
     }
   }, [userDisplay])

@@ -34,6 +34,10 @@
         width: 25px;
         height: 25px;
         background-color: #000;
+        overflow: hidden;
+        img {
+          width:100%;
+        }
       }
       .user-name {
         margin-left: 0.5rem;

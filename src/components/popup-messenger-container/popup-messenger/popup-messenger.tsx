@@ -1,16 +1,29 @@
+import { removeConversation, useGlobalContext } from "hook";
+import { IGlobalState } from "model";
+import { memo } from "react";
+import { AiOutlineSend, AiOutlineClose } from "react-icons/ai";
 
 import './popup-messenger.scss';
 
-function PopupMessenger() {
+function PopupMessenger({ conversation }: any) {
+  const [, dispatch] = useGlobalContext() as [IGlobalState, any];
+
   function handleChane(event: any) {
     console.log(event.target.innerHTML);
   }
+  
+  function handleCLoseConversation() {
+    dispatch(removeConversation(conversation._id))
+  }
+
   return (
     <div className="messenger-popup">
       <div className="popup-wrap">
         <div className="popup-header">
           <span className="popup-name">Vương Nguyễn</span>
-          <span className="popup-close">X</span>
+          <span className="popup-close" onClick={handleCLoseConversation}>
+            <AiOutlineClose />
+          </span>
         </div>
         <div className="popup-content">
           <div className="content-message">
@@ -51,7 +64,9 @@ function PopupMessenger() {
             <div className="message-input-container">
               <div contentEditable={true} onInput={handleChane} className="message-input"></div>
             </div>
-            <div className="message-send">Send</div>
+            <div className="message-send">
+              <AiOutlineSend />
+            </div>
           </div>
         </div>
       </div>
@@ -59,4 +74,4 @@ function PopupMessenger() {
   );
 }
 
-export default PopupMessenger;
+export default memo(PopupMessenger);
