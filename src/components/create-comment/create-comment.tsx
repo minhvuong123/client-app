@@ -5,6 +5,7 @@ import { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { nanoid } from 'nanoid';
 import { SelectorAccessUser } from 'redux/reducers/authentication.reducer';
+import { MdLibraryAdd } from "react-icons/md";
 
 import './create-comment.scss';
 
@@ -124,7 +125,9 @@ function CreateComment({ postId, commentId, onComment }: any) {
                     )
                   })
                 } 
-                <div className="file-upload" onClick={openUploadFile}>attach</div>
+                <div className="file-upload" onClick={openUploadFile}>
+                  <MdLibraryAdd />
+                </div>
               </div>
             </div>
           }
@@ -145,7 +148,9 @@ function CreateComment({ postId, commentId, onComment }: any) {
               onKeyDown={handleKeyEnter}
             ></div>
             <div className="create-comment-extension">
-              <span className="comment-extension-item" onClick={openUploadFile}>attach</span>
+              <span className="comment-extension-item" onClick={openUploadFile}>
+                <MdLibraryAdd />
+              </span>
             </div>
           </div>
         </div>

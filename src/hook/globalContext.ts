@@ -6,8 +6,8 @@ const defaultValue = [{} as IGlobalState, undefined];
 const GlobalContext = createContext(defaultValue);
 
 export const useGlobalContext = () => {
-  const [status, dispatch] = useContext(GlobalContext) as [IGlobalState, any];
-  return [status, dispatch];
+  const [state, dispatch] = useContext(GlobalContext) as [IGlobalState, any];
+  return [state, dispatch];
 }
 
 export default GlobalContext;

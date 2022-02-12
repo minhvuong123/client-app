@@ -1,0 +1,24 @@
+.popup-header {
+  padding: 10px 8px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  align-items: center;
+  .popup-close {
+    color: #716e6e;
+    font-size: 1.8rem;
+    background-color: transparent;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.1s ease-in-out;
+    &:hover {
+      background-color: #e4e6eb;
+    }
+  }
+}

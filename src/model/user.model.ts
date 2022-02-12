@@ -1,3 +1,5 @@
+import { IFile } from "./file.model";
+
 export interface RegisterModel {
   onCloseRegister: React.MouseEventHandler<any>;
 }
@@ -49,4 +51,13 @@ export interface IImage {
   images_user_id: string;
   images_url: string;
   createdAt: string;
+}
+
+export interface IMessage {
+  _id?: string;
+  conversationId?: string;
+  sender?: UserResponse;
+  senderId?: string;
+  text?: string;
+  images?: IFile[];
 }
