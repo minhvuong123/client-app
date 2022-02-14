@@ -1,5 +1,5 @@
 import { IFile, IMessage } from "model";
-import { memo, useEffect, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { AiOutlineSend } from "react-icons/ai";
 import MessengerText from 'components/popup-messenger-container/messenger-text/messenger-text';
 import { useSelector } from "react-redux";
@@ -8,18 +8,33 @@ import { getMessagesUrl, messageApi, sendMessageUrl } from "api/message.api";
 import MessengerHeader from "../messenger-header/messenger-header";
 import { nanoid } from 'nanoid';
 import { MdLibraryAdd } from "react-icons/md";
+import { SelectorSocketUser } from "redux/reducers/user.reducer";
 
 import './popup-messenger.scss';
 
 function PopupMessenger({ conversation }: any) {
   const user = useSelector(SelectorAccessUser);
-  const [messages, getMessages] = useState([] as IMessage[]);
+  const socketUser = useSelector(SelectorSocketUser);
+  const [messages, setMessages] = useState([] as IMessage[]);
+  const [arrivalMessage, setArrivalMessage] = useState({} as any);
   const editorRef = useRef() as any;
   const [filesList, setFilesList] = useState([] as IFile[]);;
   const editorFileRef = useRef() as any;
   const scrollRef = useRef<HTMLDivElement>();
+  const [typing, setTyping] = useState('');
+
+  const connectSocket = useCallback(() => {
+    // emit leave-room currently
+    socketUser.emit('leave-room');
+
+    // emit join-room flat
+    socketUser.emit('join-room', { conversationId: conversation._id, userId: user._id });
+ }, [])
 
   useEffect(() => {
+
+    connectSocket();
+
     async function getMessageData() {
       const originMessageData: IMessage = {
         conversationId: conversation._id
@@ -29,13 +44,38 @@ function PopupMessenger({ conversation }: any) {
       const { status, data } = responseMessage;
 
       if(status === 200 && data.status === 'success' && data.messages) {
-        console.log(data.messages);
-        getMessages(data.messages);
+        setMessages(data.messages);
       }
     }
 
     getMessageData();
-  }, [conversation._id])
+  }, [conversation._id, connectSocket])
+
+  // listen to arrival message
+  useEffect(() => {
+    socketUser.on('client-get-message', (message: IMessage) => {
+      setArrivalMessage(message);
+    })
+
+    socketUser.on('get-someone-typing', (fullname: string) => {
+      setTyping(fullname);
+    })
+
+    socketUser.on('get-someone-stop-typing', () => {
+      setTyping('');
+    })
+
+    return () => { }
+  }, [socketUser]);
+
+  // update arrival message to messsages
+  useEffect(() => {
+    if (Object.keys(arrivalMessage).length > 0 &&  user._id !== arrivalMessage.sender._id) { // condition to void leaking memory
+      setMessages([...messages, arrivalMessage])
+    }
+    
+    return () => { }
+  }, [arrivalMessage]);
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({
@@ -45,7 +85,7 @@ function PopupMessenger({ conversation }: any) {
     });
 
     return () => { }
-  }, [messages]);
+  }, [messages, typing]);
 
   async function handleSendMessage(): Promise<void>  {
     const originMessageData: IMessage = {
@@ -63,8 +103,10 @@ function PopupMessenger({ conversation }: any) {
     const { status, data } = responseMessage;
 
     if(status === 200 && data.status === 'success' && data.message) {
-      console.log(data.message);
+      setMessages([...messages, data.message])
       editorRef.current.innerHTML = '';
+
+      socketUser.emit('client-send-message', data.message);
     }
   }
 
@@ -113,6 +155,18 @@ function PopupMessenger({ conversation }: any) {
     setFilesList(files);
   }
 
+  function getFullName(first_name: string = '', last_name: string = ''): string { 
+    return `${first_name} ${last_name}`;
+  }
+  
+  function handleFocus() {
+    socketUser.emit('someone-typing', getFullName(user.first_name, user.last_name));
+  }
+
+  function handleFocusOut() {
+    socketUser.emit('someone-stop-typing');
+  }
+
   return (
     <div className="messenger-popup">
       <div className="popup-wrap">
@@ -125,6 +179,9 @@ function PopupMessenger({ conversation }: any) {
               messages.map((message: IMessage) => {
                 return <MessengerText key={message._id} message={message} />
               })
+            }
+            {
+              typing && <div className="someone-typing">{typing}</div>
             }
             <div ref={scrollRef as any}></div>
           </div>
@@ -162,7 +219,7 @@ function PopupMessenger({ conversation }: any) {
                 multiple
                 ref={editorFileRef}
               />
-              <div ref={editorRef} contentEditable={true} className="message-input"></div>
+              <div ref={editorRef} contentEditable={true} onFocus={handleFocus} onBlur={handleFocusOut} className="message-input"></div>
             </div>
             <div className="message-send" onClick={handleSendMessage}>
               <AiOutlineSend />

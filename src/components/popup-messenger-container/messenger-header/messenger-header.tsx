@@ -5,6 +5,7 @@ import { memo, useCallback, useEffect, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { SelectorAccessUser } from "redux/reducers/authentication.reducer";
+import { SelectorSocketUser } from "redux/reducers/user.reducer";
 
 import './messenger-header.scss';
 
@@ -12,6 +13,7 @@ function MessengerHeader({ conversationId, members }: any) {
   const [, dispatch] = useGlobalContext() as [IGlobalState, any];
   const userOwner = useSelector(SelectorAccessUser);
   const [userDisplay, setUserDisplay] = useState({} as UserResponse);
+  const socketUser = useSelector(SelectorSocketUser);
 
   const getUserDisplay = useCallback((members: UserResponse[]) => {
     return members.find((member: UserResponse) => member._id !== userOwner._id) || {} as UserResponse;
@@ -24,6 +26,9 @@ function MessengerHeader({ conversationId, members }: any) {
 
   function handleCLoseConversation() {
     dispatch(removeConversation(conversationId))
+
+     // emit leave-room
+     socketUser.emit('leave-room');
   }
 
   function getFullName(first_name: string = '', last_name: string = ''): string { 

@@ -1,12 +1,12 @@
-import { UserResponse } from "model";
+
 
 export const USER = {
-  ADD_USER_PREVIEW: 'ADD_USER_PREVIEW'
+  SET_SOCKET_USER: 'SET_SOCKET_USER'
 };
 
-export function addUserPreview(user: UserResponse) {
+export function setSocket(socketUser: any) {
   return {
-    type: USER.ADD_USER_PREVIEW,
-    user
+    type: USER.SET_SOCKET_USER,
+    socketUser
   }
 } 

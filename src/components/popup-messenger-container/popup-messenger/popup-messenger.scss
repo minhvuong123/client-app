@@ -174,3 +174,32 @@
     }
   }
 }
+
+.someone-typing {
+  font-size: 1.2rem;
+  color: rgba(0,0,0, 0.7);
+  margin-left: 4rem;
+  margin-top: .5rem;
+}
+
+.someone-typing::after {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+  -webkit-animation: ellipsis steps(4,end) 900ms infinite;      
+  animation: ellipsis steps(4,end) 900ms infinite;
+  content: "\2026"; /* ascii code for the ellipsis character */
+  width: 0px;
+}
+
+@keyframes ellipsis {
+  to {
+    width: 1.25em;    
+  }
+}
+
+@-webkit-keyframes ellipsis {
+  to {
+    width: 1.25em;    
+  }
+}

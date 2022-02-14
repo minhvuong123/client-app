@@ -4,17 +4,16 @@
 import { addFriendUrl, suggestFriendsUrl, userApi } from 'api';
 import { UserResponse } from 'model';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { addUserPreview } from 'redux/actions/user.action';
 import { SelectorAccessUser } from 'redux/reducers/authentication.reducer';
+
 import './friends-list.scss';
 
 function FriendsList() {
   const user = useSelector(SelectorAccessUser) as UserResponse;
   const [friends, setFriends] = useState([] as UserResponse[]);
   const [addedFriendsId, setAddedFriendsId] = useState([] as string[]);
-  const dispatch = useDispatch();
 
 
   useEffect(() => {
@@ -46,12 +45,6 @@ function FriendsList() {
       const addedFriendsIdClone = [...addedFriendsId];
       addedFriendsIdClone.push(friendId);
       setAddedFriendsId(addedFriendsIdClone);
-
-      // add friend to userPreview in store
-      const friend = friends.find(friend => friend._id === friendId);
-      if(friend) {
-        dispatch(addUserPreview(friend))
-      }
     }
   }
 

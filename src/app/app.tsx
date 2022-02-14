@@ -4,8 +4,11 @@ import PopupMessengerContainer from "components/popup-messenger-container/popup-
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
+import { setSocket } from "redux/actions";
 import { LOGIN } from "redux/actions/authentication.action";
 import RoutesPath, { RenderRoutes } from "routes/routes";
+import io from 'socket.io-client';
+
 import './app.scss';
 
 function App() {
@@ -22,6 +25,7 @@ function App() {
 
         if(status === 200 && data.status === 'success') {
           dispatch({ type: LOGIN.SUCCESS, token, refreshToken, user: JSON.parse(user) });
+          dispatch(setSocket(io("ws://localhost:4000")));
         } else {
           userApi.refresh(refreshUrl, { refreshToken }).then(result => {
             const { status, data } = result;
