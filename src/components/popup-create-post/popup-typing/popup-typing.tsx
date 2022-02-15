@@ -167,6 +167,7 @@ function PopupTyping({ onPost, onChange }: any) {
                       </div>
                     )
                   }
+                  return ''
                 })
               }
               <div className="images-remove" onClick={removeFilesList}>

@@ -1,16 +1,18 @@
 html, body {
-  height: calc(100vh - 53.4px);
-  font-size: 10px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  height: calc(100vh - 53.4px) !important;
+  font-size: 10px !important;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
   background-color: #f0f2f5 !important;
 }
 
 #root {
   background-color: #f0f2f5;
+  height: 100%;
 }
 
 .app-container {
   font-size: 1.5rem;
+  height: 100%;
   .app-home {
     margin-top: 53.4px;
     display: flex;

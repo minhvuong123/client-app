@@ -259,6 +259,7 @@ function Post({ post, onRemovePost }: any) {
                       </div>
                     )
                   }
+                  return ''
                 })
               }
             </div>

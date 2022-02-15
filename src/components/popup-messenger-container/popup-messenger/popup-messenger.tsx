@@ -29,7 +29,7 @@ function PopupMessenger({ conversation }: any) {
 
     // emit join-room flat
     socketUser.emit('join-room', { conversationId: conversation._id, userId: user._id });
- }, [])
+ }, [conversation._id, socketUser, user._id])
 
   useEffect(() => {
 
@@ -71,11 +71,11 @@ function PopupMessenger({ conversation }: any) {
   // update arrival message to messsages
   useEffect(() => {
     if (Object.keys(arrivalMessage).length > 0 &&  user._id !== arrivalMessage.sender._id) { // condition to void leaking memory
-      setMessages([...messages, arrivalMessage])
+      setMessages(messages => [...messages, arrivalMessage]);
     }
     
     return () => { }
-  }, [arrivalMessage]);
+  }, [arrivalMessage, user._id]);
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({
